@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		67075BD027D110BE000A9660 /* NewAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67075BCF27D110BE000A9660 /* NewAccountController.swift */; };
+		67075BD227D110E4000A9660 /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67075BD127D110E4000A9660 /* LogInController.swift */; };
 		673DFE6927D0ED4B007FA78E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673DFE6827D0ED4B007FA78E /* AppDelegate.swift */; };
 		673DFE6B27D0ED4B007FA78E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673DFE6A27D0ED4B007FA78E /* SceneDelegate.swift */; };
 		673DFE6D27D0ED4B007FA78E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673DFE6C27D0ED4B007FA78E /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		67075BCF27D110BE000A9660 /* NewAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountController.swift; sourceTree = "<group>"; };
+		67075BD127D110E4000A9660 /* LogInController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
 		673DFE6527D0ED4B007FA78E /* todoDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todoDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		673DFE6827D0ED4B007FA78E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		673DFE6A27D0ED4B007FA78E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +64,8 @@
 				673DFE6A27D0ED4B007FA78E /* SceneDelegate.swift */,
 				673DFE6C27D0ED4B007FA78E /* ViewController.swift */,
 				673DFE6E27D0ED4B007FA78E /* Main.storyboard */,
+				67075BD127D110E4000A9660 /* LogInController.swift */,
+				67075BCF27D110BE000A9660 /* NewAccountController.swift */,
 				673DFE7127D0ED4C007FA78E /* Assets.xcassets */,
 				673DFE7327D0ED4C007FA78E /* LaunchScreen.storyboard */,
 				673DFE7627D0ED4C007FA78E /* Info.plist */,
@@ -138,7 +144,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67075BD027D110BE000A9660 /* NewAccountController.swift in Sources */,
 				673DFE6D27D0ED4B007FA78E /* ViewController.swift in Sources */,
+				67075BD227D110E4000A9660 /* LogInController.swift in Sources */,
 				673DFE6927D0ED4B007FA78E /* AppDelegate.swift in Sources */,
 				673DFE6B27D0ED4B007FA78E /* SceneDelegate.swift in Sources */,
 			);
