@@ -14,6 +14,10 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-
+    @IBAction func goNewAccount(_ sender: UIButton) {
+        performSegue(withIdentifier: "NewAccount", sender: nil)
+        
+    }
+    
 }
 
