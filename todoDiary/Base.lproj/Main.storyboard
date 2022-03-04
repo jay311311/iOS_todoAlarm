@@ -27,19 +27,16 @@
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zml-mh-K0e">
                                         <rect key="frame" x="65" y="37" width="285" height="34"/>
-                                        <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XyZ-VD-jbJ">
                                         <rect key="frame" x="65" y="92" width="284" height="34"/>
-                                        <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nlg-T8-0II">
                                         <rect key="frame" x="65" y="145" width="284" height="34"/>
-                                        <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
@@ -50,13 +47,9 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="New Account"/>
-                                        <connections>
-                                            <action selector="goNewAccount:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bqX-VG-VKv"/>
-                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="BirthDate" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nsL-jx-hb9">
                                         <rect key="frame" x="65" y="198" width="284" height="34"/>
-                                        <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
@@ -93,7 +86,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="1Sq-Yn-Hyj"/>
                     <connections>
-                        <outlet property="TextFieldBox" destination="Qhx-Jm-bnF" id="xf9-ZS-LXk"/>
+                        <outlet property="IdTextField" destination="Zml-mh-K0e" id="feb-zp-zuG"/>
+                        <outlet property="NameTextField" destination="nlg-T8-0II" id="kjn-WS-y3D"/>
+                        <outlet property="PasswordTextField" destination="XyZ-VD-jbJ" id="tj1-ZQ-ZIh"/>
+                        <outlet property="TextFieldBox" destination="Qhx-Jm-bnF" id="09d-hy-mZk"/>
+                        <outlet property="signUpBtn" destination="dMw-X7-mTA" id="Y81-jx-SYU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MNq-FY-kwE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
