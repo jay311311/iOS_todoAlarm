@@ -87,26 +87,28 @@ class NewAccountController: UIViewController {
     
     
     @objc func touchSignup(){
-        if validationId.count <= 0 || validationPassword.count <= 0 ||
-            NameTextField.text?.isEmpty != nil {
-            
-            let alert =   UIAlertController(title: "알림", message: "정보를 기입해 주세요", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style:.default , handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            NameTextField.layer.borderColor = UIColor.red.cgColor
-            NameTextField.layer.borderWidth = 0.25
-            nameErrorMessage.textColor = UIColor.red
-            nameErrorMessage.text = "* 이름을 입력하여 주세요"
-        }else{
-            Auth.auth().createUser(withEmail:validationId, password: validationPassword) { authResult, error in
-                if authResult != nil {
-                    print("signup success")
-                }else{
-                    print("signup fail---> \(error?.localizedDescription)")
-                }
-            }
-        }
+        Auth.auth().createUser(withEmail:validationId, password: validationPassword) { authResult, error in
+                        if authResult != nil {
+                            print("signup success")
+                        }else{
+                            print("signup fail---> \(error?.localizedDescription)")
+                        }
+                    }
     }
+//        if validationId.count <= 0 || validationPassword.count <= 0 ||
+//            NameTextField.text?.isEmpty != nil {
+//
+//            let alert =   UIAlertController(title: "알림", message: "정보를 기입해 주세요", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "확인", style:.default , handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//            NameTextField.layer.borderColor = UIColor.red.cgColor
+//            NameTextField.layer.borderWidth = 0.25
+//            nameErrorMessage.textColor = UIColor.red
+//            nameErrorMessage.text = "* 이름을 입력하여 주세요"
+//        }else{
+//
+//        }
+//    }
 }
 
 
