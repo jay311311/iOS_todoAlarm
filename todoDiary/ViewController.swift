@@ -24,5 +24,11 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func goLoginAccount(_ sender: UIButton) {
+        performSegue(withIdentifier: "LogIn", sender: nil)
+        
+    }
+    
+    
 }
 

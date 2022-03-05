@@ -6,9 +6,16 @@
 //
 
 import UIKit
+import Firebase
 
 class LogInController: UIViewController {
 
+    @IBOutlet weak var idTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBOutlet weak var loginBtn: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -16,14 +23,16 @@ class LogInController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func clickLoginBtn(_ sender: UIButton) {
+       
+        guard let email = idTextField.text, let password = passwordTextField.text else { return  }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+          guard let strongSelf = self else { return }
+            
+            print("로그인결과----->\(authResult)")
+          // ...
+        }
     }
-    */
-
+    
 }
