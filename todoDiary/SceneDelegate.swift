@@ -10,13 +10,32 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let goTodo : Bool =  true
+    
+    let MainStoryboard =  UIStoryboard(name: "Main", bundle: nil)
+    let TodoStoryboard =  UIStoryboard(name: "Todo", bundle: nil)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        //로그인 상태에따른 초기화면 변화
+        if goTodo == false{
+            //로그인 안된 상황
+            guard let loginVC =  MainStoryboard.instantiateViewController(withIdentifier: "MainView") as? ViewController else { return }
+            window?.rootViewController = loginVC
+            
+        }else {
+            
+            //로그인 된상황
+            guard let todoVC =  TodoStoryboard.instantiateViewController(withIdentifier: "TodoView") as? TodoController else { return }
+            window?.rootViewController = todoVC
+          
+
+        }
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
