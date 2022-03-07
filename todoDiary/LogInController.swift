@@ -30,6 +30,10 @@ class LogInController: UIViewController {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
           guard let strongSelf = self else { return }
             
+            
+            if authResult != nil{
+                self?.performSegue(withIdentifier: "TodoView", sender: nil)
+            }
             print("로그인결과----->\(authResult)")
           // ...
         }
