@@ -9,7 +9,10 @@ import UIKit
 
 class TodoCellController: UICollectionViewCell {
     
-
+    @IBOutlet weak var hashTagBox: UIView!
+    
+    @IBOutlet weak var hashTagLabel: UILabel!
+    
     @IBOutlet weak var cellTitle: UILabel!
     
     @IBOutlet weak var star: UIButton!
@@ -17,9 +20,12 @@ class TodoCellController: UICollectionViewCell {
     @IBOutlet weak var bell: UIButton!
     
     @IBOutlet weak var checkBox: UIButton!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+       
+    }
+
+
     
-
-
-
     
 }
