@@ -130,11 +130,11 @@ extension addTodo: UITextFieldDelegate{
             }
         }
     }
-    
 }
 
 
 class paddingLabel: UILabel {
+    // 동적으로 생성되는 UIlabel constraint
     @IBInspectable var padding: UIEdgeInsets = UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 0)
 
     override func drawText(in rect: CGRect) {
