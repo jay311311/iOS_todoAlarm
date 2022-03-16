@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    let goTodo : Bool =  true
+    let goTodo : Bool =  false
     
     let MainStoryboard =  UIStoryboard(name: "Main", bundle: nil)
     let TodoStoryboard =  UIStoryboard(name: "Todo", bundle: nil)
@@ -26,18 +26,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             //로그인 안된 상황
             guard let loginVC =  MainStoryboard.instantiateViewController(withIdentifier: "MainView") as? ViewController else { return }
             window?.rootViewController = loginVC
-            
         }else {
-            
             //로그인 된상황
             guard let todoVC =  TodoStoryboard.instantiateViewController(withIdentifier: "TodoView") as? TodoController else { return }
             window?.rootViewController = todoVC
-          
-
         }
-
     }
-
+    
+    
+    func changeRootViewController (_ vc: UIViewController, animated: Bool) {
+        guard let window = self.window else { return }
+        window.rootViewController = vc // 전환
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

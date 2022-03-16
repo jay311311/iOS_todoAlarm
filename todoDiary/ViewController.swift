@@ -6,17 +6,27 @@
 //
 
 import UIKit
+import Firebase
+
 
 
 class ViewController: UIViewController {
 
+    var handle: AuthStateDidChangeListenerHandle?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        handle = Auth.auth().addStateDidChangeListener { auth, user in
+            dump("auth:\(auth.description)//// user: \(user)")
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
-       // Auth.auth().removeStateDidChangeListener(handle!)
+        Auth.auth().removeStateDidChangeListener(handle!)
     }
 
     @IBAction func goNewAccount(_ sender: UIButton) {

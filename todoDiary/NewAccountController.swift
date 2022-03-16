@@ -7,9 +7,11 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
 
 
 class NewAccountController: UIViewController {
+    
     
     @IBOutlet weak var TextFieldBox: UIView!
     
@@ -24,7 +26,10 @@ class NewAccountController: UIViewController {
     
     var validationId : String = ""
     var validationPassword :String = ""
+    var validationName: String = ""
     
+    var userInfo =  User.shared
+    var ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +52,7 @@ class NewAccountController: UIViewController {
             IdTextField.layer.borderWidth = 0.25
             idErrorMessage.text = ""
             validationId = id
+            userInfo.email = id
         }else{
             IdTextField.layer.borderColor = UIColor.red.cgColor
             IdTextField.layer.borderWidth = 0.25
@@ -77,19 +83,25 @@ class NewAccountController: UIViewController {
     }
     
     @IBAction func checkName(_ sender: Any) {
-        
+        guard let name = NameTextField.text else { return }
+
         NameTextField.layer.borderColor = UIColor.green.cgColor
         NameTextField.layer.borderWidth = 0.25
         NameTextField.layer.cornerRadius = 5.0
         nameErrorMessage.textColor = UIColor.red
         nameErrorMessage.text = ""
+        validationName = name
     }
     
     
     @objc func touchSignup(){
         Auth.auth().createUser(withEmail:validationId, password: validationPassword) { authResult, error in
                         if authResult != nil {
-                            print("signup success")
+                            guard let userResult  =  authResult else { return }
+                            self.ref.child("user").child(userResult.user.uid).setValue(["email":userResult.user.email, "uid" : userResult.user.uid, "name":self.validationName])
+                            guard let todoVC = self.storyboard?.instantiateViewController(withIdentifier: "TodoView") as? TodoController else { return }
+                                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(todoVC, animated: false)
+                            
                         }else{
                             print("signup fail---> \(error?.localizedDescription)")
                         }

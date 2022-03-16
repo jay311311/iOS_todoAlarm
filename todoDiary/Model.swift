@@ -8,16 +8,17 @@
 import Foundation
 
 struct User{
+    static let shared = User(email: "", uid: "", todos: [])
+    
     var email : String
-    var userId : String
-    var  userUuid : String
+    var uid : String
     var todos:[Todo]
     
     var ToDictionary:[String: Any]{
-        var todoArray = todos.map { todo in
+        let todoArray = todos.map { todo in
            return todo.ToDictionary
         }
-        let dict:[String: Any]  = ["email":email, "userId":userId, "userUuid":userUuid, "todos":todoArray]
+        let dict:[String: Any]  = ["email":email, "uid":uid, "todos":todoArray]
         return dict
     }
 }
