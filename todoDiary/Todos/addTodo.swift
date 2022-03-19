@@ -69,7 +69,7 @@ class addTodo: UIViewController {
         let date = dateFormatter.string(from: datePicker.date)
         var todo = Todo(date: date, todo_title: todoTitle, hashtag: Array(hashTags.values), notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "")
         //let userData  = User(email: userEmail, uid: userUid, todos: [todo])
-        db.child(userUid).child(getDataCount).setValue(todo.ToDictionary)
+        db.child(userUid).child("todos").child(getDataCount).setValue(todo)
     }
     
     

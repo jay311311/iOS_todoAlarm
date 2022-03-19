@@ -27,8 +27,7 @@ struct User:Codable{
 
 
 struct Todo: Codable{
-    
-        var date : String
+    var date : String
     var todo_title: String
     var hashtag : Array<String>
     var notification : Int
@@ -37,18 +36,20 @@ struct Todo: Codable{
     var diary_description : String
     var diary_image: String
     
-    var ToDictionary:[String:Any] {
-        let dict: [String:Any] = ["date":date,
-                               "todo_title":todo_title,
-                               "hashtag":hashtag,
-                               "notification":notification,
-                               "important":important,
-                               "diary_title":diary_title,
-                               "diary_description":diary_description,
-                               "dairy_image":diary_image]
-        return dict
-        
-    }
+    
+//
+//    var ToDictionary:[String:Any] {
+//        let dict: [String:Any] = ["date":date,
+//                               "todo_title":todo_title,
+//                               "hashtag":hashtag,
+//                               "notification":notification,
+//                               "important":important,
+//                               "diary_title":diary_title,
+//                               "diary_description":diary_description,
+//                               "diary_image":diary_image]
+//        return dict
+//
+//    }
     
 
 }

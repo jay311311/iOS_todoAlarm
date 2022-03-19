@@ -10,12 +10,10 @@ import Firebase
 import FirebaseDatabase
 
 class TodoController: UIViewController {
-
-    
     var i  = 0
     let db =  Database.database().reference().child("user")
     let userUid =  Auth.auth().currentUser?.uid
-    var todos :[Todo] = []
+    var todos = [Todo]()
     
     @IBOutlet weak var todoCollectionVIew: UICollectionView!
     
@@ -26,26 +24,44 @@ class TodoController: UIViewController {
     }
     
     func fetchData(){
-        db.child("user").child("\(userUid!)").child("todos").observeSingleEvent(of: .value) { snapshot in
-//            do{
-//                self.todos.removeAll()
-//                let decoder =  JSONDecoder()
-//
-//                let data = try JSONSerialization.data(withJSONObject:snapshot.value , options: [])
-//                print("\(data)")
-//                let todo:[Todo] = try decoder.decode([Todo].self, from: data)
-//                print("\(todo)")
-//
-//                self.todos = todo
-//
-//            } catch let error {
-//                print("여기? 거짓")
-//
-//                print("error: ", error.localizedDescription)
-//            }
+        db.child("\(userUid!)").child("todos").observe(.childAdded) { (snapshot) in
+            do{
+                let key =  snapshot.key
+            guard let myTodos =  snapshot.value as? [String : Any] else {return}
+                print("이것은 키이이이 ---> \(key) // 이것은 값-----> \(myTodos)")
+                let decoder =  JSONDecoder()
+                let data =  try JSONSerialization.data(withJSONObject: myTodos, options: [])
+                let todo = try decoder.decode(Todo.self, from: data)
+                self.todos.append(todo)
+                print("드디어 완성 ----> \(self.todos.count)")
+                self.todoCollectionVIew.reloadData()
+            }catch let error{
+                print(String(describing: error))            }
         }
+       // db.child("\(userUid!)").child("todos").observeSingleEvent(of: .value) { snapshot in
+          //  let snapshots =  snapshot.value!
+     
+//            do{
+//                         //self.todos.removeAll()
+//                         let decoder =  JSONDecoder()
+//
+//                         let data = try JSONSerialization.data(withJSONObject:snapshot.value , options: [])
+//                         print("\(data)")
+//                         let todo:[Todo] = try decoder.decode([Todo].self, from: data)
+//                         print("\(todo)")
+//
+//                         self.todos = todo
+//
+//                     } catch let error {
+//                         print("여기? 거짓")
+//
+//                         print("error: ", error.localizedDescription)
+//                     }
+//
+       
+}
 //        self.todoCollectionVIew.reloadData()
-    }
+    
    
 
     
