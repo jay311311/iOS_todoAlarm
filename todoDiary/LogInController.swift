@@ -15,7 +15,6 @@ class LogInController: UIViewController {
     
     @IBOutlet weak var loginBtn: UIButton!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,10 +28,7 @@ class LogInController: UIViewController {
         
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
           guard let strongSelf = self else { return }
-            
             if authResult != nil{
-                print("uid = \(authResult?.user.uid) && email = \(authResult?.user.email)&& ")
-
                 guard let todoVC = self?.storyboard?.instantiateViewController(withIdentifier: "TodoView") as? TodoController else { return }
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(todoVC, animated: false)
             }else{

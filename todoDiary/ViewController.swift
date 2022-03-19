@@ -9,7 +9,6 @@ import UIKit
 import Firebase
 
 
-
 class ViewController: UIViewController {
 
     var handle: AuthStateDidChangeListenerHandle?
@@ -21,7 +20,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         handle = Auth.auth().addStateDidChangeListener { auth, user in
-            dump("auth:\(auth.description)//// user: \(user)")
+            //dump("auth:\(auth.description)//// user: \(user)")
         }
     }
     

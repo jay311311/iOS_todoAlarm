@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import Firebase
+import FirebaseDatabase
 class addTodo: UIViewController {
 
     @IBOutlet weak var inputContainer: UIView!
@@ -16,12 +17,16 @@ class addTodo: UIViewController {
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var stackHashLabel: UIStackView!
     
-
+    
+    var currentUser = Auth.auth().currentUser
+    var db =  Database.database().reference().child("user")
     let dateFormatter = DateFormatter()
 
     let switchTitle:[String] = ["Notification", "Important"]
     var hashTags:[Int:String] =  [:]
     var i = 0
+    var notificationSate :Int = 0
+    var importantState:Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,21 +48,37 @@ class addTodo: UIViewController {
     }
     
     @IBAction func setTodo(_ sender: UIButton) {
-        guard let todo = newTaskTextField.text, todo.isEmpty == false else { return }
        
-       // print("\()")
+     setTodo()
+        setZero()
+        self.dismiss(animated: true, completion: nil)
+        
+        //print("\(todo) && \(dateFormatter.string(from: datePicker.date)) && \(hashTags)")
+    }
+    func setZero(){
+        newTaskTextField.text=""
+        hashTags.removeAll()
+        datePicker.date = Date()
+        switchTable.reloadData()
+        
+    }
+    func setTodo(){
+        guard let todoTitle = newTaskTextField.text, todoTitle.isEmpty == false else { return }
+        guard let userUid = currentUser?.uid, let userEmail =  currentUser?.email   else { return }
+        guard let getDataCount = db.child("\(userUid)").child("todos").childByAutoId().key else { return }
+        let date = dateFormatter.string(from: datePicker.date)
+        var todo = Todo(date: date, todo_title: todoTitle, hashtag: Array(hashTags.values), notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "")
+        //let userData  = User(email: userEmail, uid: userUid, todos: [todo])
+        db.child(userUid).child(getDataCount).setValue(todo.ToDictionary)
     }
     
     
     func setConfigDatePicker(){
         datePicker.date = Date()
         dateFormatter.dateFormat = "yyyy.MM.dd"
-//        dateTextField.text = "\(dateFormatter.string(from: datePicker.date))"
-//        datePicker.isHidden = true
-//        datePicker.setValue(UIColor.white, forKey: "backgroundColor")
-       // dateTextField.inputView = datePicker
         datePicker.addTarget(self, action: #selector(selectDate(picker: )), for: .valueChanged)
     }
+    
     @objc func selectDate(picker: UIDatePicker){
         print("\(dateFormatter.string(from :picker.date))")
     }
@@ -93,6 +114,21 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     @objc func changeValue( _ sender : UISwitch ){
         print(" switchis on ===>\(sender.isOn)")
         print(" switch tag  ===> \(sender.tag)")
+        if sender.tag == 0{
+            //notification
+            if sender.isOn == true{
+                notificationSate = 1
+            }else {
+                notificationSate = 0
+            }
+        }else if sender.tag == 1 {
+            //important
+            if sender.isOn == true{
+                importantState = 1
+            }else {
+                importantState = 0
+            }
+        }
     }
     
 }
@@ -126,7 +162,7 @@ extension addTodo: UITextFieldDelegate{
             if sender.view?.tag == hash.key{
                 sender.view!.removeFromSuperview()
                 hashTags.removeValue(forKey:hash.key)
-                print("\(hash.value)을 지우겠습니다+\(hashTags)")
+                //print("\(hash.value)을 지우겠습니다+\(hashTags)")
             }
         }
     }

@@ -162,6 +162,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Todo" id="PW1-yh-q6t"/>
                     <connections>
+                        <outlet property="todoCollectionVIew" destination="t6g-Ii-WFL" id="ZjT-4E-iSq"/>
                         <segue destination="zld-9d-nhs" kind="showDetail" identifier="addTodo" id="lcy-fp-mlW"/>
                     </connections>
                 </viewController>

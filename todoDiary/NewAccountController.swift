@@ -28,8 +28,7 @@ class NewAccountController: UIViewController {
     var validationPassword :String = ""
     var validationName: String = ""
     
-    var userInfo =  User.shared
-    var ref = Database.database().reference()
+    var db = Database.database().reference().child("user")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +51,7 @@ class NewAccountController: UIViewController {
             IdTextField.layer.borderWidth = 0.25
             idErrorMessage.text = ""
             validationId = id
-            userInfo.email = id
+           // userInfo.email = id
         }else{
             IdTextField.layer.borderColor = UIColor.red.cgColor
             IdTextField.layer.borderWidth = 0.25
@@ -98,12 +97,13 @@ class NewAccountController: UIViewController {
         Auth.auth().createUser(withEmail:validationId, password: validationPassword) { authResult, error in
                         if authResult != nil {
                             guard let userResult  =  authResult else { return }
-                            self.ref.child("user").child(userResult.user.uid).setValue(["email":userResult.user.email, "uid" : userResult.user.uid, "name":self.validationName])
+                            self.db.child(userResult.user.uid).setValue(["email":userResult.user.email, "uid" : userResult.user.uid, "name":self.validationName])
+                            
                             guard let todoVC = self.storyboard?.instantiateViewController(withIdentifier: "TodoView") as? TodoController else { return }
                                 (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(todoVC, animated: false)
                             
                         }else{
-                            print("signup fail---> \(error?.localizedDescription)")
+                            print("signup fail---> \(String(describing: error?.localizedDescription))")
                         }
                     }
     }

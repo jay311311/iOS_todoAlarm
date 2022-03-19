@@ -6,44 +6,49 @@
 //
 
 import Foundation
+import Firebase
 
-struct User{
-    static let shared = User(email: "", uid: "", todos: [])
-    
+struct User:Codable{
     var email : String
     var uid : String
     var todos:[Todo]
+//
+//    var ToDictionary:[String: Any]{
+//        let autoId =  Database.database().reference().childByAutoId().key
+//        let todoArray = todos.map { todo in
+//            return todo.ToDictionary}
+//
+//        let dict:[String: Any]  = ["email":email, "uid":uid, "todos":[todoArray]]
+//        return dict
+//    }
     
-    var ToDictionary:[String: Any]{
-        let todoArray = todos.map { todo in
-           return todo.ToDictionary
-        }
-        let dict:[String: Any]  = ["email":email, "uid":uid, "todos":todoArray]
-        return dict
-    }
+   
 }
 
 
-struct Todo{
-    var date : String
+struct Todo: Codable{
+    
+        var date : String
     var todo_title: String
-    var hashTag : String
+    var hashtag : Array<String>
     var notification : Int
     var important : Int
-    var diary_Title : String
+    var diary_title : String
     var diary_description : String
-    var dairy_Image: String
+    var diary_image: String
     
     var ToDictionary:[String:Any] {
         let dict: [String:Any] = ["date":date,
                                "todo_title":todo_title,
-                               "hashTag":hashTag,
+                               "hashtag":hashtag,
                                "notification":notification,
                                "important":important,
-                               "diary_Title":diary_Title,
+                               "diary_title":diary_title,
                                "diary_description":diary_description,
-                               "dairy_Image":dairy_Image]
+                               "dairy_image":diary_image]
         return dict
         
     }
+    
+
 }

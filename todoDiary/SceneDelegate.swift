@@ -6,12 +6,14 @@
 //
 
 import UIKit
-
+import Firebase
+import FirebaseDatabase
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var db = Database.database().reference()
+    var currentUser =  Auth.auth().currentUser
     let goTodo : Bool =  false
-    
     let MainStoryboard =  UIStoryboard(name: "Main", bundle: nil)
     let TodoStoryboard =  UIStoryboard(name: "Todo", bundle: nil)
 
@@ -20,16 +22,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+     
         
+    
         //로그인 상태에따른 초기화면 변화
-        if goTodo == false{
-            //로그인 안된 상황
-            guard let loginVC =  MainStoryboard.instantiateViewController(withIdentifier: "MainView") as? ViewController else { return }
-            window?.rootViewController = loginVC
-        }else {
+        if  currentUser != nil{
             //로그인 된상황
             guard let todoVC =  TodoStoryboard.instantiateViewController(withIdentifier: "TodoView") as? TodoController else { return }
             window?.rootViewController = todoVC
+        }else {
+            //로그인 안된 상황
+            guard let loginVC =  MainStoryboard.instantiateViewController(withIdentifier: "MainView") as? ViewController else { return }
+            window?.rootViewController = loginVC
+            
+           
         }
     }
     
