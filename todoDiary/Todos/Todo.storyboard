@@ -45,6 +45,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.94999999999999996" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" prefetchingEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6g-Ii-WFL">
                                 <rect key="frame" x="0.0" y="172" width="414" height="675"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="12" id="VKD-MI-ont">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -90,9 +91,9 @@
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b4N-IE-slC">
                                                             <rect key="frame" x="0.0" y="0.0" width="26.5" height="32"/>
-                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" title="">
+                                                            <state key="normal">
                                                                 <color key="titleColor" red="0.039215686270000001" green="0.1058823529" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <imageReference key="image" image="star" catalog="system"/>
                                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="16" scale="large"/>
@@ -110,6 +111,9 @@
                                                                 <color key="titleColor" red="0.039215686270000001" green="0.1058823529" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="16" scale="large"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="touchBell:" destination="Lpp-yl-fcN" eventType="touchUpInside" id="aAw-Xx-Uke"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -137,6 +141,7 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
                                         <size key="customSize" width="403" height="80"/>
                                         <connections>
                                             <outlet property="bell" destination="9TC-Y9-280" id="VyZ-KB-dnc"/>
@@ -144,6 +149,7 @@
                                             <outlet property="checkBox" destination="tMT-cM-DeJ" id="Djj-lJ-NdN"/>
                                             <outlet property="hashLabelBox" destination="Qxi-aE-qZq" id="dfb-f6-PzK"/>
                                             <outlet property="star" destination="b4N-IE-slC" id="iq2-2a-uQg"/>
+                                            <outletCollection property="gestureRecognizers" destination="kZl-qf-HvG" appends="YES" id="jQr-B6-BoA"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -187,6 +193,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="kZl-qf-HvG"/>
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="90.401785714285708"/>
         </scene>

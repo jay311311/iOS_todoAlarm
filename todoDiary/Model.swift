@@ -36,11 +36,12 @@ struct Todo: Codable{
     var diary_title : String
     var diary_description : String
     var diary_image: String
-    
+    var todo_done: Int
     
     var ToDictionary:[String:Any] {
         let dict: [String:Any] = ["id":id,
             "date":date,
+                                  "todo_done":todo_done,
                                "todo_title":todo_title,
                                "hashtag":hashtag,
                                "notification":notification,

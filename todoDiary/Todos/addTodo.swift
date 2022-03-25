@@ -64,7 +64,7 @@ class addTodo: UIViewController {
         guard let userUid = currentUser?.uid  else { return }
         guard let getDataId = db.child("\(userUid)").child("todos").childByAutoId().key else { return }
         let date = dateFormatter.string(from: datePicker.date)
-        let todo = Todo(id:getDataId,date: date, todo_title: todoTitle, hashtag: Array(hashTags.values), notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "")
+        let todo = Todo(id:getDataId,date: date,  todo_title: todoTitle, hashtag: Array(hashTags.values), notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "", todo_done: 0)
         //let userData  = User(email: userEmail, uid: userUid, todos: [todo])
         db.child(userUid).child("todos").child(getDataId).setValue(todo.ToDictionary)
     }
@@ -90,7 +90,6 @@ extension addTodo : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "switchCell",for: indexPath)
         cell.textLabel?.text = switchTitle[indexPath.row]
         let switchView = setConfigSwitchBtn(indexPath: indexPath)
@@ -127,7 +126,6 @@ extension addTodo : UITableViewDelegate, UITableViewDataSource{
             }
         }
     }
-    
 }
 
 extension addTodo: UITextFieldDelegate{
@@ -182,3 +180,5 @@ class paddingLabel: UILabel {
         return contentSize
     }
 }
+
+
