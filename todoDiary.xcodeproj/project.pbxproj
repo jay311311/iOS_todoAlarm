@@ -22,6 +22,7 @@
 		6764EC4B27D5E14C00BA1824 /* TodoCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6764EC4A27D5E14C00BA1824 /* TodoCellController.swift */; };
 		6770DC5E27D500D70076B355 /* Todo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6770DC5D27D500D70076B355 /* Todo.storyboard */; };
 		6770DC6027D5011E0076B355 /* TodoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6770DC5F27D5011E0076B355 /* TodoController.swift */; };
+		677D3F0F27EDCD8D00536B05 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = 677D3F0E27EDCD8D00536B05 /* SwipeCellKit */; };
 		67FCBE6027DCF85600705F92 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FCBE5F27DCF85600705F92 /* Model.swift */; };
 		67FDB33327D8DA8D002DFF58 /* addTodo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FDB33227D8DA8D002DFF58 /* addTodo.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				677D3F0F27EDCD8D00536B05 /* SwipeCellKit in Frameworks */,
 				67075BD927D1299F000A9660 /* FirebaseDatabase in Frameworks */,
 				67075BD527D1299F000A9660 /* FirebaseAnalytics in Frameworks */,
 				67075BD727D1299F000A9660 /* FirebaseAuth in Frameworks */,
@@ -125,6 +127,7 @@
 				67075BD427D1299F000A9660 /* FirebaseAnalytics */,
 				67075BD627D1299F000A9660 /* FirebaseAuth */,
 				67075BD827D1299F000A9660 /* FirebaseDatabase */,
+				677D3F0E27EDCD8D00536B05 /* SwipeCellKit */,
 			);
 			productName = todoDiary;
 			productReference = 673DFE6527D0ED4B007FA78E /* todoDiary.app */;
@@ -156,6 +159,7 @@
 			mainGroup = 673DFE5C27D0ED4B007FA78E;
 			packageReferences = (
 				67075BD327D1299F000A9660 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				677D3F0D27EDCD8C00536B05 /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
 			);
 			productRefGroup = 673DFE6627D0ED4B007FA78E /* Products */;
 			projectDirPath = "";
@@ -424,6 +428,14 @@
 				kind = branch;
 			};
 		};
+		677D3F0D27EDCD8C00536B05 /* XCRemoteSwiftPackageReference "SwipeCellKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwipeCellKit/SwipeCellKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -441,6 +453,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 67075BD327D1299F000A9660 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
+		};
+		677D3F0E27EDCD8D00536B05 /* SwipeCellKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 677D3F0D27EDCD8C00536B05 /* XCRemoteSwiftPackageReference "SwipeCellKit" */;
+			productName = SwipeCellKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

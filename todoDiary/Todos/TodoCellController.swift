@@ -9,17 +9,79 @@ import UIKit
 
 class TodoCellController: UICollectionViewCell  {
     
+    @IBOutlet weak var swipeBox: UIStackView!
+    @IBOutlet weak var cellBox : UIView!
     @IBOutlet weak var hashLabelBox: UIStackView!
     @IBOutlet weak var cellTitle: UILabel!
     @IBOutlet weak var star: UIButton!
     @IBOutlet weak var bell: UIButton!
     @IBOutlet weak var checkBox: UIButton!
+    @IBOutlet weak var updateBtn: UIButton!
+    @IBOutlet weak var deleteBtn: UIButton!
+  
 
-   
     override func awakeFromNib() {
+      
         super.awakeFromNib()
+        configSwipeBtn()
+        self.contentView.layer.cornerRadius = 10.0
+        self.contentView.layer.zPosition = 1
     }
+    
+    func configSwipeBtn(){
+        // - 제스처
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipBtn(_:)))
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipBtn(_:)))
+        leftSwipe.direction =  UISwipeGestureRecognizer.Direction.left
+        rightSwipe.direction =  UISwipeGestureRecognizer.Direction.right
+        cellBox.addGestureRecognizer(leftSwipe)
+        cellBox.addGestureRecognizer(rightSwipe)
+        // - 버튼
+        deleteBtn.addTarget(self, action: #selector(deleteTodo), for: .touchUpInside)
+        updateBtn.addTarget(self, action: #selector(updateTodo), for: .touchUpInside)
+    }
+    
+    @objc func deleteTodo(_ sender : UIButton){
+       // let accecsskey = self.accessibilityIdentifier else { return }
+        
+        TodoController().dataDelete(id: self.accessibilityIdentifier)
+        print("\(self.accessibilityIdentifier)")
+        
+        
+        print("click delete btn")
+    }
+    
+    @objc func updateTodo(){
+        print("click update btn")
+    }
+    
+ 
+    
+    @objc func swipBtn(_ sender : UIGestureRecognizer){
+        let width =  cellBox.bounds.size.width
+        let height = cellBox.bounds.size.height
+        let swipeBoxWidth = swipeBox.bounds.size.width
+        if let swipeGesture = sender as? UISwipeGestureRecognizer{
+            switch swipeGesture.direction{
+            case .left :
+//                deleteBtn.isEnabled = true
+//                updateBtn.isEnabled = true
+                UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
+                    self.cellBox.frame = CGRect(x: -swipeBoxWidth, y: 0.0, width: width, height: height)
+                }, completion: nil)
+            case .right:
+                UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
+                    self.cellBox.frame = CGRect(x: 0, y: 0.0, width: width, height: height)
+                }, completion: nil)
+                
+            default: break
+            }
+        }
+       
 
+    }
+  
+    
     @IBAction func touchStar(_ sender: UIButton) {
         sender.isSelected.toggle()
         if sender.isSelected == true {
@@ -64,7 +126,6 @@ class TodoCellController: UICollectionViewCell  {
         }
     }
 }
-
 
 
 

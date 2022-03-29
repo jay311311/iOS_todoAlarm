@@ -65,7 +65,6 @@ class addTodo: UIViewController {
         guard let getDataId = db.child("\(userUid)").child("todos").childByAutoId().key else { return }
         let date = dateFormatter.string(from: datePicker.date)
         let todo = Todo(id:getDataId,date: date,  todo_title: todoTitle, hashtag: Array(hashTags.values), notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "", todo_done: 0)
-        //let userData  = User(email: userEmail, uid: userUid, todos: [todo])
         db.child(userUid).child("todos").child(getDataId).setValue(todo.ToDictionary)
     }
     
@@ -97,7 +96,7 @@ extension addTodo : UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
-    func setConfigSwitchBtn( indexPath : IndexPath)-> UISwitch{
+    func setConfigSwitchBtn( indexPath : IndexPath) -> UISwitch{
         // switchBtn_toggle 구성
         let switchView = UISwitch(frame: .zero)
         switchView.setOn(false, animated: true)
@@ -157,7 +156,6 @@ extension addTodo: UITextFieldDelegate{
             if sender.view?.tag == hash.key{
                 sender.view!.removeFromSuperview()
                 hashTags.removeValue(forKey:hash.key)
-                //print("\(hash.value)을 지우겠습니다+\(hashTags)")
             }
         }
     }

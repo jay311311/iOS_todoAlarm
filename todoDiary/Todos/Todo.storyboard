@@ -54,102 +54,150 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="cell" id="Lpp-yl-fcN" customClass="TodoCellController" customModule="todoDiary" customModuleProvider="target">
-                                        <rect key="frame" x="5.5" y="10" width="403" height="80"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="7" y="10" width="400" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PIA-gT-3gd">
-                                            <rect key="frame" x="0.0" y="0.0" width="403" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="400" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tMT-cM-DeJ">
-                                                    <rect key="frame" x="15" y="29" width="19.5" height="22"/>
-                                                    <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <state key="normal">
-                                                        <color key="titleColor" red="0.039215686274509803" green="0.10588235294117647" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="medium"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="didTodo:" destination="Lpp-yl-fcN" eventType="touchUpInside" id="4gI-WH-q9F"/>
-                                                    </connections>
-                                                </button>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-49-fsZ">
-                                                    <rect key="frame" x="44" y="5" width="291.5" height="20"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Hgz-ce-B0c">
+                                                    <rect key="frame" x="240" y="0.0" width="160" height="80"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleAspectFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qxi-aE-qZq">
-                                                            <rect key="frame" x="0.0" y="0.0" width="271" height="20"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnA-mm-0xS">
+                                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                                            <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="UnA-mm-0xS" secondAttribute="height" multiplier="5:5" id="pPe-Oy-bBz"/>
+                                                            </constraints>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain">
+                                                                <imageReference key="image" image="pencil" catalog="system" symbolScale="large"/>
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="18" scale="large"/>
+                                                            </buttonConfiguration>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s15-Xp-elD">
+                                                            <rect key="frame" x="80" y="0.0" width="80" height="80"/>
+                                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="s15-Xp-elD" secondAttribute="height" multiplier="1:1" id="YU0-BE-XvX"/>
+                                                            </constraints>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain">
+                                                                <imageReference key="image" image="trash" catalog="system" symbolScale="large"/>
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="18" scale="large"/>
+                                                            </buttonConfiguration>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fn1-8A-EB0">
+                                                    <rect key="frame" x="0.0" y="0.0" width="400" height="80"/>
+                                                    <subviews>
+                                                        <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tMT-cM-DeJ">
+                                                            <rect key="frame" x="15" y="29" width="19.5" height="22"/>
+                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <state key="normal">
+                                                                <color key="titleColor" red="0.039215686274509803" green="0.10588235294117647" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="medium"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="didTodo:" destination="Lpp-yl-fcN" eventType="touchUpInside" id="4gI-WH-q9F"/>
+                                                            </connections>
+                                                        </button>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-49-fsZ">
+                                                            <rect key="frame" x="50" y="5" width="235" height="20"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleAspectFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qxi-aE-qZq">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="170" height="20"/>
+                                                                </stackView>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cell" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGp-Bm-PIH">
+                                                            <rect key="frame" x="50" y="27.5" width="31.5" height="25.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                            <color key="textColor" red="0.039215686274509803" green="0.10588235294117647" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="hsg-24-BGh">
+                                                            <rect key="frame" x="358.5" y="13.5" width="26.5" height="53.5"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b4N-IE-slC">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="26.5" height="25.5"/>
+                                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal">
+                                                                        <color key="titleColor" red="0.039215686270000001" green="0.1058823529" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <imageReference key="image" image="star" catalog="system"/>
+                                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="16" scale="large"/>
+                                                                    </state>
+                                                                    <state key="selected" image="star" catalog="system"/>
+                                                                    <connections>
+                                                                        <action selector="touchStar:" destination="Lpp-yl-fcN" eventType="touchUpInside" id="kTx-Kk-Lyt"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9TC-Y9-280">
+                                                                    <rect key="frame" x="0.0" y="28.5" width="26.5" height="25"/>
+                                                                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" image="bell" catalog="system">
+                                                                        <color key="titleColor" red="0.039215686270000001" green="0.1058823529" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="16" scale="large"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="touchBell:" destination="Lpp-yl-fcN" eventType="touchUpInside" id="aAw-Xx-Uke"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="b4N-IE-slC" firstAttribute="leading" secondItem="hsg-24-BGh" secondAttribute="leading" id="1ie-GM-TUb"/>
+                                                                <constraint firstItem="b4N-IE-slC" firstAttribute="top" secondItem="hsg-24-BGh" secondAttribute="top" id="KYZ-ip-x4z"/>
+                                                                <constraint firstAttribute="bottom" secondItem="9TC-Y9-280" secondAttribute="bottom" id="Sgh-Ob-3em"/>
+                                                                <constraint firstAttribute="trailing" secondItem="b4N-IE-slC" secondAttribute="trailing" id="Tdg-f2-Eiw"/>
+                                                            </constraints>
                                                         </stackView>
                                                     </subviews>
-                                                </stackView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cell" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGp-Bm-PIH">
-                                                    <rect key="frame" x="54" y="25" width="31.5" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                    <color key="textColor" red="0.039215686274509803" green="0.10588235294117647" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="hsg-24-BGh">
-                                                    <rect key="frame" x="361.5" y="8.5" width="26.5" height="63"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b4N-IE-slC">
-                                                            <rect key="frame" x="0.0" y="0.0" width="26.5" height="32"/>
-                                                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal">
-                                                                <color key="titleColor" red="0.039215686270000001" green="0.1058823529" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <imageReference key="image" image="star" catalog="system"/>
-                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="16" scale="large"/>
-                                                            </state>
-                                                            <state key="selected" image="star" catalog="system"/>
-                                                            <connections>
-                                                                <action selector="touchStar:" destination="Lpp-yl-fcN" eventType="touchUpInside" id="kTx-Kk-Lyt"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9TC-Y9-280">
-                                                            <rect key="frame" x="0.0" y="32" width="26.5" height="31"/>
-                                                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="bell" catalog="system">
-                                                                <color key="titleColor" red="0.039215686270000001" green="0.1058823529" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="16" scale="large"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="touchBell:" destination="Lpp-yl-fcN" eventType="touchUpInside" id="aAw-Xx-Uke"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <gestureRecognizers/>
                                                     <constraints>
-                                                        <constraint firstItem="b4N-IE-slC" firstAttribute="leading" secondItem="hsg-24-BGh" secondAttribute="leading" id="1ie-GM-TUb"/>
-                                                        <constraint firstItem="b4N-IE-slC" firstAttribute="top" secondItem="hsg-24-BGh" secondAttribute="top" id="KYZ-ip-x4z"/>
-                                                        <constraint firstAttribute="bottom" secondItem="9TC-Y9-280" secondAttribute="bottom" id="Sgh-Ob-3em"/>
-                                                        <constraint firstAttribute="trailing" secondItem="b4N-IE-slC" secondAttribute="trailing" id="Tdg-f2-Eiw"/>
+                                                        <constraint firstItem="hsg-24-BGh" firstAttribute="centerY" secondItem="Fn1-8A-EB0" secondAttribute="centerY" id="Bwh-qw-Tzd"/>
+                                                        <constraint firstAttribute="bottom" secondItem="gEj-49-fsZ" secondAttribute="bottom" constant="55" id="Jrp-0B-26n"/>
+                                                        <constraint firstItem="tMT-cM-DeJ" firstAttribute="centerY" secondItem="Fn1-8A-EB0" secondAttribute="centerY" id="P6B-dv-MuC"/>
+                                                        <constraint firstItem="tGp-Bm-PIH" firstAttribute="leading" secondItem="tMT-cM-DeJ" secondAttribute="trailing" constant="15.5" id="VMH-cS-mNs"/>
+                                                        <constraint firstItem="tGp-Bm-PIH" firstAttribute="leading" secondItem="Fn1-8A-EB0" secondAttribute="leading" constant="50" id="Xx8-ry-n9y"/>
+                                                        <constraint firstItem="tGp-Bm-PIH" firstAttribute="centerY" secondItem="Fn1-8A-EB0" secondAttribute="centerY" id="Z9F-Vv-7Tw"/>
+                                                        <constraint firstItem="gEj-49-fsZ" firstAttribute="top" secondItem="Fn1-8A-EB0" secondAttribute="top" constant="5" id="hV9-Cb-QEJ"/>
+                                                        <constraint firstItem="gEj-49-fsZ" firstAttribute="leading" secondItem="Fn1-8A-EB0" secondAttribute="leading" constant="50" id="nPe-Qb-niF"/>
+                                                        <constraint firstAttribute="trailing" secondItem="hsg-24-BGh" secondAttribute="trailing" constant="15" id="qR8-a8-jj9"/>
+                                                        <constraint firstItem="hsg-24-BGh" firstAttribute="leading" secondItem="gEj-49-fsZ" secondAttribute="trailing" constant="73.5" id="sF5-Am-ehX"/>
+                                                        <constraint firstItem="tMT-cM-DeJ" firstAttribute="leading" secondItem="Fn1-8A-EB0" secondAttribute="leading" constant="15" id="we9-zE-VIn"/>
                                                     </constraints>
-                                                </stackView>
+                                                </view>
                                             </subviews>
+                                            <color key="backgroundColor" systemColor="systemGreenColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="gEj-49-fsZ" secondAttribute="bottom" constant="55" id="1fJ-f1-Lgt"/>
-                                                <constraint firstAttribute="bottom" secondItem="hsg-24-BGh" secondAttribute="bottom" constant="8.5" id="1tP-7Z-8jl"/>
-                                                <constraint firstItem="hsg-24-BGh" firstAttribute="top" secondItem="PIA-gT-3gd" secondAttribute="top" constant="8.5" id="3da-HO-8bb"/>
-                                                <constraint firstItem="tMT-cM-DeJ" firstAttribute="centerY" secondItem="PIA-gT-3gd" secondAttribute="centerY" id="3n7-v8-Dpc"/>
-                                                <constraint firstItem="tMT-cM-DeJ" firstAttribute="leading" secondItem="PIA-gT-3gd" secondAttribute="leading" constant="15" id="6lp-uE-K1m"/>
-                                                <constraint firstItem="gEj-49-fsZ" firstAttribute="leading" secondItem="PIA-gT-3gd" secondAttribute="leading" constant="44" id="D0b-lH-dCa"/>
-                                                <constraint firstAttribute="trailing" secondItem="hsg-24-BGh" secondAttribute="trailing" constant="15" id="EyY-Vm-KX5"/>
-                                                <constraint firstItem="tGp-Bm-PIH" firstAttribute="leading" secondItem="PIA-gT-3gd" secondAttribute="leading" constant="54" id="Fm5-fv-e9X"/>
-                                                <constraint firstItem="tGp-Bm-PIH" firstAttribute="centerY" secondItem="tMT-cM-DeJ" secondAttribute="centerY" id="IgD-JE-iiZ"/>
-                                                <constraint firstItem="gEj-49-fsZ" firstAttribute="top" secondItem="PIA-gT-3gd" secondAttribute="top" constant="5" id="VHf-pd-6Qe"/>
-                                                <constraint firstItem="tGp-Bm-PIH" firstAttribute="top" secondItem="gEj-49-fsZ" secondAttribute="bottom" id="coB-mK-DQw"/>
-                                                <constraint firstItem="hsg-24-BGh" firstAttribute="leading" secondItem="gEj-49-fsZ" secondAttribute="trailing" constant="26" id="hp1-en-ySf"/>
-                                                <constraint firstItem="hsg-24-BGh" firstAttribute="centerY" secondItem="tMT-cM-DeJ" secondAttribute="centerY" id="luk-vn-91l"/>
+                                                <constraint firstAttribute="bottom" secondItem="Hgz-ce-B0c" secondAttribute="bottom" id="6TN-Mn-nWC"/>
+                                                <constraint firstAttribute="trailing" secondItem="Hgz-ce-B0c" secondAttribute="trailing" id="BdL-U1-W0G"/>
+                                                <constraint firstItem="Hgz-ce-B0c" firstAttribute="top" secondItem="PIA-gT-3gd" secondAttribute="top" id="K70-xl-s3z"/>
+                                                <constraint firstItem="Fn1-8A-EB0" firstAttribute="leading" secondItem="PIA-gT-3gd" secondAttribute="leading" id="VX0-aE-1OO"/>
+                                                <constraint firstAttribute="bottom" secondItem="Fn1-8A-EB0" secondAttribute="bottom" id="fVo-Xn-JFo"/>
+                                                <constraint firstItem="Fn1-8A-EB0" firstAttribute="top" secondItem="PIA-gT-3gd" secondAttribute="top" id="x10-Xe-K7Y"/>
+                                                <constraint firstAttribute="trailing" secondItem="Fn1-8A-EB0" secondAttribute="trailing" id="zNc-je-Y12"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <gestureRecognizers/>
-                                        <size key="customSize" width="403" height="80"/>
+                                        <size key="customSize" width="400" height="80"/>
                                         <connections>
                                             <outlet property="bell" destination="9TC-Y9-280" id="VyZ-KB-dnc"/>
+                                            <outlet property="cellBox" destination="Fn1-8A-EB0" id="lV4-eV-IJO"/>
                                             <outlet property="cellTitle" destination="tGp-Bm-PIH" id="oI2-nN-gvw"/>
                                             <outlet property="checkBox" destination="tMT-cM-DeJ" id="Djj-lJ-NdN"/>
+                                            <outlet property="deleteBtn" destination="s15-Xp-elD" id="grH-FZ-cTY"/>
                                             <outlet property="hashLabelBox" destination="Qxi-aE-qZq" id="dfb-f6-PzK"/>
                                             <outlet property="star" destination="b4N-IE-slC" id="iq2-2a-uQg"/>
-                                            <outletCollection property="gestureRecognizers" destination="kZl-qf-HvG" appends="YES" id="jQr-B6-BoA"/>
+                                            <outlet property="swipeBox" destination="Hgz-ce-B0c" id="oIc-cS-FfO"/>
+                                            <outlet property="updateBtn" destination="UnA-mm-0xS" id="0qa-7w-q4t"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -193,7 +241,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="kZl-qf-HvG"/>
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="90.401785714285708"/>
         </scene>
@@ -416,14 +463,19 @@
     <resources>
         <image name="bell" catalog="system" width="128" height="124"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
+        <image name="pencil" catalog="system" width="128" height="113"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
         <image name="square" catalog="system" width="128" height="114"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBrownColor">
             <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
