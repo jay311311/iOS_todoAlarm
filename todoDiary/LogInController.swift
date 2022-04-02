@@ -27,13 +27,13 @@ class LogInController: UIViewController {
         guard let email = idTextField.text, let password = passwordTextField.text else { return  }
         
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-          guard let strongSelf = self else { return }
+        //  guard let strongSelf = self else { return }
             if authResult != nil{
                 guard let todoVC = self?.storyboard?.instantiateViewController(withIdentifier: "TodoView") as? TodoController else { return }
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(todoVC, animated: false)
             }else{
                
-                    print("\(error?.localizedDescription)")
+                print("\(String(describing: error?.localizedDescription))")
                 
             }
             }

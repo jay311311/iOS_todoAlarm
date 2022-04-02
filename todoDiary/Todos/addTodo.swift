@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 class addTodo: UIViewController {
-
+    
     @IBOutlet weak var inputContainer: UIView!
     @IBOutlet weak var newTaskTextField: UITextField!
     @IBOutlet weak var switchTable: UITableView!
@@ -21,7 +21,7 @@ class addTodo: UIViewController {
     var currentUser = Auth.auth().currentUser
     var db =  Database.database().reference().child("user")
     let dateFormatter = DateFormatter()
-
+    
     let switchTitle:[String] = ["Notification", "Important"]
     var hashTags:[Int:String] =  [:]
     var i = 0
@@ -48,28 +48,24 @@ class addTodo: UIViewController {
     }
     
     @IBAction func setTodo(_ sender: UIButton) {
-       
-     setTodo()
+        setTodo()
         setZero()
         self.dismiss(animated: true, completion: nil)
-        
-        //print("\(todo) && \(dateFormatter.string(from: datePicker.date)) && \(hashTags)")
     }
+    
     func setZero(){
         newTaskTextField.text=""
         hashTags.removeAll()
         datePicker.date = Date()
         switchTable.reloadData()
-        
     }
     func setTodo(){
         guard let todoTitle = newTaskTextField.text, todoTitle.isEmpty == false else { return }
-        guard let userUid = currentUser?.uid, let userEmail =  currentUser?.email   else { return }
-        guard let getDataCount = db.child("\(userUid)").child("todos").childByAutoId().key else { return }
+        guard let userUid = currentUser?.uid  else { return }
+        guard let getDataId = db.child("\(userUid)").child("todos").childByAutoId().key else { return }
         let date = dateFormatter.string(from: datePicker.date)
-        var todo = Todo(date: date, todo_title: todoTitle, hashtag: Array(hashTags.values), notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "")
-        //let userData  = User(email: userEmail, uid: userUid, todos: [todo])
-        db.child(userUid).child(getDataCount).setValue(todo.ToDictionary)
+        let todo = Todo(id:getDataId,date: date,  todo_title: todoTitle, hashtag: Array(hashTags.values), notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "", todo_done: 0)
+        db.child(userUid).child("todos").child(getDataId).setValue(todo.ToDictionary)
     }
     
     
@@ -82,32 +78,31 @@ class addTodo: UIViewController {
     @objc func selectDate(picker: UIDatePicker){
         print("\(dateFormatter.string(from :picker.date))")
     }
-
+    
 }
 
 //switchBtn_toggle위한 table view 구성
 extension addTodo : UITableViewDelegate, UITableViewDataSource{
     //UITableViewDataSource
-func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return switchTitle.count
-}
-
-func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-   
-    let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "switchCell",for: indexPath)
-    cell.textLabel?.text = switchTitle[indexPath.row]
-
-   let switchView = setConfigSwitchBtn(indexPath: indexPath)
-    cell.accessoryView = switchView
-    return cell
-}
-    func setConfigSwitchBtn( indexPath : IndexPath)-> UISwitch{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return switchTitle.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "switchCell",for: indexPath)
+        cell.textLabel?.text = switchTitle[indexPath.row]
+        let switchView = setConfigSwitchBtn(indexPath: indexPath)
+        cell.accessoryView = switchView
+        return cell
+    }
+    
+    func setConfigSwitchBtn( indexPath : IndexPath) -> UISwitch{
         // switchBtn_toggle 구성
         let switchView = UISwitch(frame: .zero)
         switchView.setOn(false, animated: true)
         switchView.tag = indexPath.row
         switchView.addTarget(self, action: #selector(changeValue), for: .valueChanged)
-      return switchView
+        return switchView
     }
     
     //UITableViewDelegate
@@ -130,7 +125,6 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             }
         }
     }
-    
 }
 
 extension addTodo: UITextFieldDelegate{
@@ -153,7 +147,7 @@ extension addTodo: UITextFieldDelegate{
             hashLabel.isUserInteractionEnabled = true
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(removeHashTag))
             hashLabel.addGestureRecognizer(tapGestureRecognizer)
-            }
+        }
     }
     
     @objc func removeHashTag(sender: UITapGestureRecognizer){
@@ -162,7 +156,6 @@ extension addTodo: UITextFieldDelegate{
             if sender.view?.tag == hash.key{
                 sender.view!.removeFromSuperview()
                 hashTags.removeValue(forKey:hash.key)
-                //print("\(hash.value)을 지우겠습니다+\(hashTags)")
             }
         }
     }
@@ -172,12 +165,12 @@ extension addTodo: UITextFieldDelegate{
 class paddingLabel: UILabel {
     // 동적으로 생성되는 UIlabel constraint
     @IBInspectable var padding: UIEdgeInsets = UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 0)
-
+    
     override func drawText(in rect: CGRect) {
         let paddingRect = rect.inset(by: padding)
         super.drawText(in: paddingRect)
     }
-
+    
     override var intrinsicContentSize: CGSize {
         var contentSize = super.intrinsicContentSize
         contentSize.height += padding.top + padding.bottom
@@ -185,3 +178,5 @@ class paddingLabel: UILabel {
         return contentSize
     }
 }
+
+

@@ -6,29 +6,29 @@
 //
 
 import Foundation
-import Firebase
+
 
 struct User:Codable{
     var email : String
     var uid : String
     var todos:[Todo]
-//
-//    var ToDictionary:[String: Any]{
-//        let autoId =  Database.database().reference().childByAutoId().key
-//        let todoArray = todos.map { todo in
-//            return todo.ToDictionary}
-//
-//        let dict:[String: Any]  = ["email":email, "uid":uid, "todos":[todoArray]]
-//        return dict
-//    }
+    //
+    //    var ToDictionary:[String: Any]{
+    //        let autoId =  Database.database().reference().childByAutoId().key
+    //        let todoArray = todos.map { todo in
+    //            return todo.ToDictionary}
+    //
+    //        let dict:[String: Any]  = ["email":email, "uid":uid, "todos":[todoArray]]
+    //        return dict
+    //    }
     
-   
+    
 }
 
 
 struct Todo: Codable{
-    
-        var date : String
+    var id : String
+    var date : String
     var todo_title: String
     var hashtag : Array<String>
     var notification : Int
@@ -36,19 +36,22 @@ struct Todo: Codable{
     var diary_title : String
     var diary_description : String
     var diary_image: String
+    var todo_done: Int
     
     var ToDictionary:[String:Any] {
-        let dict: [String:Any] = ["date":date,
+        let dict: [String:Any] = ["id":id,
+            "date":date,
+                                  "todo_done":todo_done,
                                "todo_title":todo_title,
                                "hashtag":hashtag,
                                "notification":notification,
                                "important":important,
                                "diary_title":diary_title,
                                "diary_description":diary_description,
-                               "dairy_image":diary_image]
+                               "diary_image":diary_image]
         return dict
-        
+
     }
     
-
+    
 }
