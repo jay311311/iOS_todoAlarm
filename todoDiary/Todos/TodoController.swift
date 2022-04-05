@@ -56,9 +56,22 @@ class TodoController: UIViewController {
         
        // db.child("\(userUid!)").child("todos").child(id).removeValue()
        self.todos.remove(at: tag)
+      
+        //print("todoview \(todoCollectionVIew.subviews.description.contains("baseClass"))")
         DispatchQueue.main.async {
             self.todoCollectionVIew.reloadData()
-            //print(todos[IndexPath.row])
+           
+            for views in  self.todoCollectionVIew.subviews {
+                let viewWidth =  views.bounds.size.width
+                let viewHeight = views.bounds.size.height
+                for view in views.subviews{
+                    print("\(viewWidth)& \(viewHeight)")
+                    view.frame =  CGRect(x: 0.0, y: 0.0, width: viewWidth, height: viewHeight)
+                    print("================\(view)================")
+                }
+            }
+            self.todoCollectionVIew.reloadData()
+            print("완료")
         }
         
     }
@@ -150,9 +163,9 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
             let cellBoxHeight = sender.superview?.bounds.height else { return }
         print("\(sender.superview?.superview)")
         dataDelete(id: accecsskey, tag:sender.tag)
-        UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
-            sender.superview?.superview?.superview?.frame = CGRect(x: 0, y: 0.0, width: cellboxWidth, height: cellBoxHeight)
-        }, completion: nil)
+//        UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
+//            sender.superview?.superview?.superview?.frame = CGRect(x: 0, y: 0.0, width: cellboxWidth, height: cellBoxHeight)
+//        }, completion: nil)
         print("click delete btn+ \(accecsskey)")
     }
     
@@ -209,6 +222,7 @@ class TodoCellController: UICollectionViewCell  {
             print("width:\(width),  height: \(height), swipeBoxWidth:\(swipeBoxWidth) ")
             switch swipeGesture.direction{
             case .left :
+                print("처음 블럭\(self.cellBox)")
                 UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
                     self.cellBox.frame = CGRect(x: -swipeBoxWidth, y: 0.0, width: width, height: height)
                 }, completion: nil)
@@ -217,10 +231,7 @@ class TodoCellController: UICollectionViewCell  {
                     self.cellBox.frame = CGRect(x: 0, y: 0.0, width: width, height: height)
                 }, completion: nil)
                 
-            default:
-                UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
-                    self.cellBox.frame = CGRect(x: 0, y: 0.0, width: width, height: height)
-                }, completion: nil)
+            default:break
             }
         }else{
            print("test")
