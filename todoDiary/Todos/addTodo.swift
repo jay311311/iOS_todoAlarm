@@ -23,7 +23,7 @@ class addTodo: UIViewController {
     let dateFormatter = DateFormatter()
     
     let switchTitle:[String] = ["Notification", "Important"]
-    var hashTags:[Int:String] =  [:]
+    var hashTags:[Int:String] =  [0:""]
     var i = 0
     var notificationSate :Int = 0
     var importantState:Int = 0
@@ -64,7 +64,7 @@ class addTodo: UIViewController {
         guard let userUid = currentUser?.uid  else { return }
         guard let getDataId = db.child("\(userUid)").child("todos").childByAutoId().key else { return }
         let date = dateFormatter.string(from: datePicker.date)
-        let todo = Todo(id:getDataId,date: date,  todo_title: todoTitle, hashtag: Array(hashTags.values), notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "", todo_done: 0)
+        let todo = Todo(id:getDataId,date: date,  todo_title: todoTitle, hashtag: Array(hashTags.values) , notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "", todo_done: 0)
         db.child(userUid).child("todos").child(getDataId).setValue(todo.ToDictionary)
     }
     

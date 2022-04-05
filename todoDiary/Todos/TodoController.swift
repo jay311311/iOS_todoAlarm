@@ -22,14 +22,12 @@ class TodoController: UIViewController {
         super.viewDidLoad()
         fetchData()
     }
- 
+    
     func fetchData(){
         todos.removeAll()
        db.child("\(userUid!)").child("todos").observe(.childAdded) { (snapshot) in
             do{
-              //  let key =  snapshot.key
                 guard let myTodos =  snapshot.value as? [String : Any] else {return}
-               // print("이것은 키이이이 ---> \(key) // 이것은 값-----> \(myTodos)")
                 let decoder =  JSONDecoder()
                 let data =  try JSONSerialization.data(withJSONObject: myTodos, options: [])
                 let todo = try decoder.decode(Todo.self, from: data)
@@ -49,25 +47,34 @@ class TodoController: UIViewController {
     
     func dataUpdate(id: String?, element:Int?, category:String? ) {
         guard let id = id, let element = element, let category = category else { return }
-        db.child("\(userUid!)").child("todos").child(id).child(category).setValue(element)
+       // db.child("\(userUid!)").child("todos").child(id).child(category).setValue(element)
     }
     
-    func dataDelete(id: String?) {
-        guard let id = id else { return }
-        print(self.todoCollectionVIew)
-        print(todos)
-        todos.removeAll()
-        viewDidLoad()
-        print(todos)
-
+    func dataDelete(id: String?, tag: Int?) {
+        guard let id = id, let tag = tag else { return }
+        print("파이어 베이스 삭제 로드")
+       // db.child("\(userUid!)").child("todos").child(id).removeValue()
+       self.todos.remove(at: tag)
         DispatchQueue.main.async {
-        print("hahaha")
+           
+            self.todoCollectionVIew.reloadData()
+            //print(todos[IndexPath.row])
         }
-        //db.child("\(userUid!)").child("todos").child(id).removeValue()
-      //  todoCollectionVIew.reloadData()
         
-        // super.viewDidLoad()
-     //   fetchData()
+    }
+    
+    @objc func deleteTodo(_ sender : UIButton){
+        guard let accecsskey = sender.accessibilityIdentifier else { return }
+        print("indexPath \(sender.tag) ")
+        
+       // sender.superview?.superview?.removeFromSuperview()
+        dataDelete(id: accecsskey, tag:sender.tag)
+        print("click delete btn+ \(accecsskey)")
+       
+    }
+    
+    @objc func updateTodo(){
+        print("click update btn")
     }
 }
 
@@ -75,6 +82,7 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return todos.count
     }
+    
    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,13 +91,21 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
         // - 데이터 fetch
         cell.cellTitle.text = todoData.todo_title
         // - hasgtag(UILabel) 동적생성
+ 
+        
+       
+        
         todoData.hashtag.map { hash in
             let hashLabel =  paddingLabel()
             hashLabel.translatesAutoresizingMaskIntoConstraints = false
             hashLabel.isUserInteractionEnabled = true
             hashLabel.font = UIFont.systemFont(ofSize: 12)
             hashLabel.textColor = .lightGray
-            hashLabel.text =  "# \(hash)"
+            if hash == "" {
+                hashLabel.text =  ""
+            }else {
+                hashLabel.text =  "# \(hash)"
+            }
             cell.hashLabelBox.addArrangedSubview(hashLabel)
         }
         // 별표 표시
@@ -133,15 +149,17 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
         cell.checkBox.accessibilityIdentifier = todoData.id
         cell.bell.accessibilityIdentifier = todoData.id
         cell.star.accessibilityIdentifier =  todoData.id
+        cell.deleteBtn.accessibilityIdentifier =  todoData.id
+        cell.deleteBtn.tag = indexPath.row
  
         //cell 레아이웃
         cell.layer.cornerRadius = 10.0
         cell.layer.borderWidth = 0.0
-        //cell.layer.shadowColor = UIColor.lightGray.cgColor
-       // cell.layer.shadowOffset = CGSize(width: 6.0, height: 6.0)
-       // cell.layer.shadowRadius = 5.0
-       // cell.layer.shadowOpacity = 0.2
         cell.layer.masksToBounds = false
+        
+        //cell swipe button
+        cell.deleteBtn.addTarget(self, action: #selector(deleteTodo), for: .touchUpInside)
+        cell.updateBtn.addTarget(self, action: #selector(updateTodo), for: .touchUpInside)
         return cell
     }
 }

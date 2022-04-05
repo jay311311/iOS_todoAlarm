@@ -193,11 +193,11 @@
                                             <outlet property="cellBox" destination="Fn1-8A-EB0" id="lV4-eV-IJO"/>
                                             <outlet property="cellTitle" destination="tGp-Bm-PIH" id="oI2-nN-gvw"/>
                                             <outlet property="checkBox" destination="tMT-cM-DeJ" id="Djj-lJ-NdN"/>
-                                            <outlet property="deleteBtn" destination="s15-Xp-elD" id="grH-FZ-cTY"/>
+                                            <outlet property="deleteBtn" destination="s15-Xp-elD" id="hFE-cw-m3g"/>
                                             <outlet property="hashLabelBox" destination="Qxi-aE-qZq" id="dfb-f6-PzK"/>
                                             <outlet property="star" destination="b4N-IE-slC" id="iq2-2a-uQg"/>
                                             <outlet property="swipeBox" destination="Hgz-ce-B0c" id="oIc-cS-FfO"/>
-                                            <outlet property="updateBtn" destination="UnA-mm-0xS" id="0qa-7w-q4t"/>
+                                            <outlet property="updateBtn" destination="UnA-mm-0xS" id="H7w-tL-gEX"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -236,7 +236,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Todo" id="PW1-yh-q6t"/>
                     <connections>
-                        <outlet property="todoCollectionVIew" destination="t6g-Ii-WFL" id="ZjT-4E-iSq"/>
+                        <outlet property="todoCollectionVIew" destination="t6g-Ii-WFL" id="iQG-CW-ClB"/>
                         <segue destination="zld-9d-nhs" kind="showDetail" identifier="addTodo" id="lcy-fp-mlW"/>
                     </connections>
                 </viewController>

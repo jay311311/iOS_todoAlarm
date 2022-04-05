@@ -37,23 +37,11 @@ class TodoCellController: UICollectionViewCell  {
         cellBox.addGestureRecognizer(leftSwipe)
         cellBox.addGestureRecognizer(rightSwipe)
         // - 버튼
-        deleteBtn.addTarget(self, action: #selector(deleteTodo), for: .touchUpInside)
-        updateBtn.addTarget(self, action: #selector(updateTodo), for: .touchUpInside)
+//        deleteBtn.addTarget(self, action: #selector(deleteTodo), for: .touchUpInside)
+//        updateBtn.addTarget(self, action: #selector(updateTodo), for: .touchUpInside)
     }
     
-    @objc func deleteTodo(_ sender : UIButton){
-       // let accecsskey = self.accessibilityIdentifier else { return }
-        
-        TodoController().dataDelete(id: self.accessibilityIdentifier)
-        print("\(self.accessibilityIdentifier)")
-        
-        
-        print("click delete btn")
-    }
-    
-    @objc func updateTodo(){
-        print("click update btn")
-    }
+
     
  
     
