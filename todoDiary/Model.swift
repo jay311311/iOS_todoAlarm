@@ -7,51 +7,122 @@
 
 import Foundation
 
-
-struct User:Codable{
-    var email : String
-    var uid : String
-    var todos:[Todo]
-    //
-    //    var ToDictionary:[String: Any]{
-    //        let autoId =  Database.database().reference().childByAutoId().key
-    //        let todoArray = todos.map { todo in
-    //            return todo.ToDictionary}
-    //
-    //        let dict:[String: Any]  = ["email":email, "uid":uid, "todos":[todoArray]]
-    //        return dict
-    //    }
+struct Todo: Codable,Equatable{
+    var id : Int
+    var date : String
+    var title: String
+    var isNotification : Bool
+    var isImportant : Bool
+    var isDone: Bool
     
+    mutating func update(date:String, title:String, isNotification: Bool,isImportant: Bool,isDone:Bool ){
+        self.date = date
+        self.title = title
+        self.isNotification = isNotification
+        self.isImportant = isImportant
+        self.isDone = isDone
+    }
+    
+    static func ==(lhs:Self, rhs:Self) -> Bool {
+        return lhs.id == rhs.id
+    }
     
 }
 
-
-struct Todo: Codable{
-    var id : String
-    var date : String
-    var todo_title: String
-    var hashtag : Array<String>
-    var notification : Int
-    var important : Int
-    var diary_title : String
-    var diary_description : String
-    var diary_image: String
-    var todo_done: Int
+class TodoManager {
+    // - 싱글톤 구현
+    static let shared =  TodoManager()
     
-    var ToDictionary:[String:Any] {
-        let dict: [String:Any] = ["id":id,
-            "date":date,
-                                  "todo_done":todo_done,
-                               "todo_title":todo_title,
-                               "hashtag":hashtag,
-                               "notification":notification,
-                               "important":important,
-                               "diary_title":diary_title,
-                               "diary_description":diary_description,
-                               "diary_image":diary_image]
-        return dict
+    // - 아이디 생성
+    static var lastId: Int  = 0
+    
+    // - 데이터를 넣을 공간 생성
+    var todos:[Todo] = []
+    
+    func createTodo(title:String, date : String ) -> Todo {
+        let nextId: Int  = TodoManager.lastId + 1
+        TodoManager.lastId  = nextId
+        return Todo(id: nextId, date: date, title: title, isNotification: false, isImportant: false, isDone: false)
+    }
+    
+    func updateTodo(_ todo :Todo){
+        // 데이터 업데이트
+        
+        guard let index = todos.firstIndex(of: todo) else { return }
+        todos[index].update(date: todo.date, title: todo.title, isNotification: todo.isNotification, isImportant: todo.isImportant, isDone: todo.isDone)
+        saveTodo()
+    }
+    
+    func deleteTodo(_ todo:Todo){
+        //데이터 삭제
+        if let index = todos.firstIndex(of: todo){
+            todos.remove(at: index)
+        }
+        saveTodo()
+    }
+    
+    func addTodo(_ todo :Todo){
+        todos.append(todo)
+        saveTodo()
+    }
+    func saveTodo(){
+        // 데이터를 json 파일로 저장하러 가기
+        Storage.store(todos, to: .documents, as: "todo.json")
+    }
+    
+    func retrieveTodo() {
+        guard let todo =  Storage.retrive("todo.json", from: .documents, as: Todo.self) else {return }
+        todos.append(todo)
+        let lastId = todos.last?.id ?? 0
+        TodoManager.lastId = lastId
+    }
+}
 
+class TodoViewModel{
+    // enum 생략
+//    enum Section: Int, CaseIterable {
+//        case today
+//        case upcoming
+//
+//        var title: String {
+//            switch self {
+//            case .today: return "Today"
+//            default: return "Upcoming"
+//            }
+//        }
+//    }
+//
+    // enum 생략
+    
+    
+    private let manager =  TodoManager.shared
+    
+    var todos:[Todo] {
+        return manager.todos
+    }
+    
+//    var todayTodos:[Todo]{
+//        return manager.todos.filter { $0.date == Date()}
+//    }
+    
+    var numOfSection:Int{
+        return manager.todos.count
+    }
+    
+    func addTodo(_ todo:Todo){
+        return manager.addTodo(todo)
+    }
+    func deleteTodo(_ todo:Todo){
+        return manager.deleteTodo(todo)
+    }
+    func updateTodo(_ todo:Todo){
+        return manager.updateTodo(todo)
+    }
+    func loadTask(){
+        manager.retrieveTodo()
     }
     
     
 }
+
+

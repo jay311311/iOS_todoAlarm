@@ -60,12 +60,12 @@ class addTodo: UIViewController {
         switchTable.reloadData()
     }
     func setTodo(){
-        guard let todoTitle = newTaskTextField.text, todoTitle.isEmpty == false else { return }
-        guard let userUid = currentUser?.uid  else { return }
-        guard let getDataId = db.child("\(userUid)").child("todos").childByAutoId().key else { return }
-        let date = dateFormatter.string(from: datePicker.date)
-        let todo = Todo(id:getDataId,date: date,  todo_title: todoTitle, hashtag: Array(hashTags.values) , notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "", todo_done: 0)
-        db.child(userUid).child("todos").child(getDataId).setValue(todo.ToDictionary)
+//        guard let todoTitle = newTaskTextField.text, todoTitle.isEmpty == false else { return }
+//        guard let userUid = currentUser?.uid  else { return }
+//        guard let getDataId = db.child("\(userUid)").child("todos").childByAutoId().key else { return }
+//        let date = dateFormatter.string(from: datePicker.date)
+//        let todo = Todo(id:getDataId,date: date,  todo_title: todoTitle, hashtag: Array(hashTags.values) , notification: notificationSate, important: importantState, diary_title: "", diary_description: "", diary_image: "", todo_done: 0)
+//        db.child(userUid).child("todos").child(getDataId).setValue(todo.ToDictionary)
     }
     
     
