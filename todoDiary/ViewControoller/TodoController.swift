@@ -1,3 +1,4 @@
+
 //
 //  TodoController.swift
 //  todoDiary
@@ -18,39 +19,71 @@ class TodoController: UIViewController {
     @IBOutlet weak var inputTextField : UITextField!
     @IBOutlet weak var calendarBtn :UIButton!
     @IBOutlet weak var addBtn :UIButton!
+    @IBOutlet weak var datePickerView : UIView!
+    @IBOutlet weak var datePicker : UIDatePicker!
+    
     let todoListViewModel = TodoViewModel()
-
+    var nowDate = Date()
+    var todoDate : String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        todoListViewModel.loadTask()
+       
+        datePickerView.isHidden = true
         
-        //키보드 디텍션 : 키보드 높이가 올라오면 인풋창도 같이 올라와서 노출되게끔
+        todoDate =   saveTodoDate(now: nowDate)
+
         NotificationCenter.default.addObserver(self, selector: #selector(adjustInputView), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(adjustInputView), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        
-        todoListViewModel.loadTask()
+        datePicker.addTarget(self, action: #selector(changeDate), for: .valueChanged)
        
-
-
     }
     @IBAction func tapCalendarButton(_ sender: Any) {
+        // keyboard 안보이게 처리
+        inputTextField.resignFirstResponder()
+        inputViewBottom.constant =  0
+        
+        //isSelected에 따른 ui 하단 변화
         calendarBtn.isSelected = !calendarBtn.isSelected
+        datePickerView.isHidden = !calendarBtn.isSelected
+        inputViewBottom.constant = calendarBtn.isSelected ? datePickerView.bounds.height : 0
+
+        datePicker.minimumDate =  Date()
     }
     
     @IBAction func tapAddTaskButton(_ sender: Any) {
         addBtn.isSelected = !addBtn.isSelected
-        
+        // inputview에 글자가 있는지 확인
+        guard let detail =  inputTextField.text , detail.isEmpty == false else { return }
+        let todo =  TodoManager.shared.createTodo(title: detail, date: todoDate)
+        todoListViewModel.addTodo(todo)
+        todoCollectionVIew.reloadData()
+        inputTextField.text = ""
+        inputTextField.resignFirstResponder()
+        calendarBtn.isSelected = false
+        inputViewBottom.constant =  0
+        datePickerView.isHidden = true
     }
+    
     @IBAction func tapBG(_ sender: Any) {
         inputTextField.resignFirstResponder()
+        calendarBtn.isSelected =  false
+        datePickerView.isHidden = true
     }
     
-
-//    @IBAction func openModal(_ sender: UIButton) {
-//        performSegue(withIdentifier: "addTodo", sender: nil)
-//    }
+    func saveTodoDate(now: Date) -> String {
+       var nowDate = now.ISO8601Format()
+        nowDate = nowDate.components(separatedBy: "T")[0]
+       // print("\(nowDate)")
+        return nowDate
+    }
     
+   @objc  func changeDate (){
+      todoDate = saveTodoDate(now: datePicker.date)
+    }
 
 }
 
@@ -58,14 +91,16 @@ extension TodoController{
     @objc private func adjustInputView (noti : Notification){
         guard let userInfo = noti.userInfo else  { return }
         guard let keyboardFrame =  (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        
+        datePickerView.isHidden = true
+
         if noti.name ==  UIResponder.keyboardWillShowNotification{
             let adjustmentHeight = keyboardFrame.height -  view.safeAreaInsets.bottom
             inputViewBottom.constant =  adjustmentHeight
+            
         }else {
             inputViewBottom.constant =  0
         }
-        print("keyboardFram --->\(keyboardFrame)")
+        //print("keyboardFram --->\(keyboardFrame)")
     }
     // 키보드에  높이에 따른 인풋뷰 위치 변경
 }
@@ -80,96 +115,34 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? TodoCellController else {
             return UICollectionViewCell()
         }
-       // cell.cellTitle.text = todoData.todo_title
         var todo : Todo
         todo = todoListViewModel.todos[indexPath.item]
-       // todo = todoListViewModel.laterTodos[indexPath.item]
         cell.updateUI(todo: todo)
-        // - hasgtag(UILabel) 동적생성
-//        todoData.hashtag.map { hash in
-//            let hashLabel =  paddingLabel()
-//            hashLabel.translatesAutoresizingMaskIntoConstraints = false
-//            hashLabel.isUserInteractionEnabled = true
-//            hashLabel.font = UIFont.systemFont(ofSize: 12)
-//            hashLabel.textColor = .lightGray
-//            if hash == "" {
-//                hashLabel.text =  ""
-//            }else {
-//                hashLabel.text =  "# \(hash)"
-//            }
-//            cell.hashLabelBox.addArrangedSubview(hashLabel)
-//        }
-        // 별표 표시
-//        if todoData.important == 1{
-//            cell.star.isSelected = true
-//            cell.star.tintColor = UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0)
-//        }else{
-//            cell.star.isSelected = false
-//            cell.star.tintColor = .lightGray
-//        }
-        //종 표시
-//        if todoData.notification == 1{
-//            cell.bell.isSelected = true
-//            cell.bell.tintColor = UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0)
-//        }else{
-//            cell.bell.isSelected = true
-//            cell.bell.tintColor = .lightGray
-//        }
-        // 체크박스 표시
-//        if todoData.todo_done == 1 {
-//            cell.checkBox.isSelected = true
-//            cell.bell.isEnabled = false
-//            cell.star.isEnabled = false
-//           // cell.cellTitle.isEnabled = false
-//            cell.cellTitle.strikeThrough(from: todoData.todo_title, at: todoData.todo_title, bool: cell.checkBox.isSelected)
-//            cell.cellTitle.textColor = UIColor(white: 80/100, alpha: 1.0)
-//            cell.checkBox.setImage(UIImage(systemName: "checkmark",withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .bold, scale: .large)), for: .normal)
-//            cell.checkBox.tintColor = UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0)
-//        }else{
-//            cell.checkBox.isSelected = false
-//            cell.bell.isEnabled = true
-//            cell.star.isEnabled = true
-//            cell.cellTitle.strikeThrough(from: todoData.todo_title, at: todoData.todo_title, bool: cell.checkBox.isSelected)
-//            cell.cellTitle.textColor = UIColor(red: 10/225, green: 27/225, blue: 57/225, alpha: 1.0)
-//            cell.checkBox.setImage(UIImage(systemName: "square"), for: .normal)
-//            cell.checkBox.tintColor = .lightGray
-//        }
         
-       // accessId 넘겨주기 for update
-//        cell.accessibilityIdentifier =  todoData.id
-//        cell.checkBox.accessibilityIdentifier = todoData.id
-//        cell.bell.accessibilityIdentifier = todoData.id
-//        cell.star.accessibilityIdentifier =  todoData.id
-//        cell.deleteBtn.accessibilityIdentifier =  todoData.id
-//        cell.tag = indexPath.row
-//
-        //cell 레아이웃
-        cell.layer.cornerRadius = 10.0
-        cell.layer.borderWidth = 0.0
-        cell.layer.masksToBounds = false
+        cell.doneCheckBoxTapHandler = { isDone in
+            todo.isDone = isDone
+            self.todoListViewModel.updateTodo(todo)
+            self.todoCollectionVIew.reloadData()
+        }
+        cell.doneDeleteButtonTapHandler = {
+            self.todoListViewModel.deleteTodo(todo)
+            self.todoCollectionVIew.reloadData()
+        }
         
-        //cell swipe button
-//        cell.deleteBtn.addTarget(self, action: #selector(deleteTodo), for: .touchUpInside)
-//        cell.updateBtn.addTarget(self, action: #selector(updateTodo), for: .touchUpInside)
+        cell.doneStarTapHandler = { isImportant in
+            todo.isImportant = isImportant
+            self.todoListViewModel.updateTodo(todo)
+            self.todoCollectionVIew.reloadData()
+        }
+        
+       
+//        cell.layer.cornerRadius = 10.0
+//        cell.layer.borderWidth = 0.0
+//        cell.layer.masksToBounds = false
+        
         return cell
     }
     
-//    @objc func deleteTodo(_ sender : UIButton){
-//        guard let accecsskey = sender.accessibilityIdentifier,
-//            let cellboxWidth = sender.superview?.superview?.bounds.width,
-//            let cellBoxHeight = sender.superview?.bounds.height else { return }
-//   //     print("\(todoCollectionVIew.subviews)")
-//        dataDelete(id: accecsskey, tag:sender.tag)
-//        print("\(accecsskey) &\(sender.tag)")
-////        UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
-////            sender.superview?.superview?.superview?.frame = CGRect(x: 0, y: 0.0, width: cellboxWidth, height: cellBoxHeight)
-////        }, completion: nil)
-//        print("click delete btn+ \(accecsskey)")
-//    }
-//
-//    @objc func updateTodo(){
-//        print("click update btn")
-//    }
 }
 
 extension TodoController : UICollectionViewDelegateFlowLayout{
@@ -184,7 +157,6 @@ extension TodoController : UICollectionViewDelegateFlowLayout{
 
 class TodoCellController: UICollectionViewCell  {
     
-    
     @IBOutlet weak var swipeBox: UIStackView!
     @IBOutlet weak var cellBox : UIView!
     @IBOutlet weak var cellDate: UILabel!
@@ -194,17 +166,13 @@ class TodoCellController: UICollectionViewCell  {
     @IBOutlet weak var checkBox: UIButton!
     @IBOutlet weak var deleteBtn: UIButton!
    
-   
-   
-  
    // view객체의 메소드가 다른 비지니스 로직에까지 영향을 주지 않기위해 클로저 사용
     var doneBellTapHandler : ((Bool)->Void)?
-    var donStarTapHandler : ((Bool)->Void)?
+    var doneStarTapHandler : ((Bool)->Void)?
     var doneCheckBoxTapHandler : ((Bool)->Void)?
     var doneDeleteButtonTapHandler : (()->Void)?
     
     override func awakeFromNib() {
-      
         super.awakeFromNib()
         configSwipeBtn()
         self.contentView.layer.cornerRadius = 10.0
@@ -221,17 +189,23 @@ class TodoCellController: UICollectionViewCell  {
         cellDate.text = todo.date
         cellTitle.text = todo.title
         cellTitle.alpha = todo.isDone ? 0.2 : 1
+        cellDate.alpha = todo.isDone  ? 0.5 : 1
         cellTitle.strikeThrough(from: todo.title, at: todo.title, bool: todo.isDone)
-      //  deleteBtn.isHidden =  todo.isDone == false
         star.isSelected =  todo.isImportant
         bell.isSelected =  todo.isNotification
+        star.isEnabled = !todo.isDone
+        bell.isEnabled = !todo.isDone
         star.tintColor =  todo.isImportant ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
         bell.tintColor =  todo.isNotification ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
     }
     
     func reset(){
+        let width =  cellBox.bounds.size.width
+        let height = cellBox.bounds.size.height
         cellTitle.alpha = 1
-        
+        UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
+            self.cellBox.frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
+        }, completion: nil)
     }
     
     func configSwipeBtn(){
@@ -245,69 +219,50 @@ class TodoCellController: UICollectionViewCell  {
     }
     
     @objc func swipBtn(_ sender : UISwipeGestureRecognizer){
-        
-        if let swipeGesture = sender as? UISwipeGestureRecognizer{
+            if let swipeGesture = sender as? UISwipeGestureRecognizer{
             let width =  cellBox.bounds.size.width
             let height = cellBox.bounds.size.height
             let swipeBoxWidth = swipeBox.bounds.size.width
-        //    print("width:\(width),  height: \(height), swipeBoxWidth:\(swipeBoxWidth) ")
             switch swipeGesture.direction{
             case .left :
-                print("스와이프 블럭1,\(self.accessibilityIdentifier) & ,\(self.tag)")
-              
                 UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
                     self.cellBox.frame = CGRect(x: -swipeBoxWidth, y: 0.0, width: width, height: height)
                 }, completion: nil)
-              //  TodoController().dataDelete(id: self.accessibilityIdentifier!, tag:self.tag)
             case .right:
-                print("스와이프 블럭2,\(self.cellBox.frame)")
                 UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
                     self.cellBox.frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
                 }, completion: nil)
-
             default:break
             }
-        }else{
-           print("test")
         }
-
-
     }
   
     
     @IBAction func touchStar(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        if sender.isSelected == true {
-            star.tintColor = UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0)
-          //  TodoController().dataUpdate(id: sender.accessibilityIdentifier, element: 1, category: "important")
-        }else{
-           star.tintColor = .lightGray
-          //  TodoController().dataUpdate(id: sender.accessibilityIdentifier, element: 0, category: "important")
-        }
+        sender.isSelected = !sender.isSelected
+        var isImportant = sender.isSelected
+        star.tintColor = sender.isSelected ?UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
+        doneStarTapHandler?(isImportant)
     }
     
     @IBAction func touchBell(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        if sender.isSelected == true {
-            bell.tintColor = UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0)
-        //    TodoController().dataUpdate(id: sender.accessibilityIdentifier, element: 1, category: "notification")
-        }else{
-           bell.tintColor = .lightGray
-         //   TodoController().dataUpdate(id: sender.accessibilityIdentifier, element: 0, category: "notification")
-        }
+        sender.isSelected = !sender.isSelected
+        bell.tintColor   = sender.isSelected ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
+        
     }
     
 
     @IBAction func didTodo(_ sender: UIButton) {
         checkBox.isSelected = !checkBox.isSelected
         let isDone = checkBox.isSelected
-        bell.isEnabled = !isDone
-        star.isEnabled = !isDone
+        bell.isEnabled = isDone
+        star.isEnabled = isDone
         cellTitle.alpha = isDone  ? 0.2 : 1
-        cellDate.alpha = isDone  ? 0.2 : 1
+        cellDate.alpha = isDone  ? 0.5 : 1
         cellTitle.strikeThrough(from: cellTitle.text, at: cellTitle.text, bool: isDone)
         doneCheckBoxTapHandler?(isDone)
     }
+    
     @IBAction func didDelete(_ sender: UIButton) {
         doneDeleteButtonTapHandler?()
     }
@@ -321,17 +276,13 @@ class TodoCellController: UICollectionViewCell  {
 extension UILabel{
     // 취소선 toggle 기능
     func strikeThrough(from text: String?, at range: String?,bool: Bool?) {
-           guard let text = text,
-                 let range = range,
-                    let bool = bool else { return }
-           
+           guard let text = text, let range = range, let bool = bool else { return }
            let attributedString = NSMutableAttributedString(string: text)
+        
         bool
         ? attributedString.addAttributes([NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue], range: NSString(string: text).range(of: range))
         :
         attributedString.addAttributes([NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.isEmpty], range: NSString(string: text).range(of: range))
            self.attributedText = attributedString
        }
-    
-
 }

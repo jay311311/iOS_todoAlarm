@@ -261,6 +261,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F05-Tm-b1q">
                                         <rect key="frame" x="338.5" y="19" width="20.5" height="22"/>
+                                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal">
                                             <imageReference key="image" image="calendar" catalog="system" symbolScale="large"/>
@@ -285,6 +286,24 @@
                                     <constraint firstItem="F05-Tm-b1q" firstAttribute="leading" secondItem="m3D-sq-eAk" secondAttribute="trailing" constant="15" id="xE7-nr-rTf"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMk-oF-cme">
+                                <rect key="frame" x="0.0" y="633" width="414" height="180"/>
+                                <subviews>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="Y3a-dC-LfR">
+                                        <rect key="frame" x="47" y="15" width="320" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="uxH-bm-3tC"/>
+                                        </constraints>
+                                        <locale key="locale" localeIdentifier="ko"/>
+                                    </datePicker>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="Y3a-dC-LfR" firstAttribute="centerY" secondItem="aMk-oF-cme" secondAttribute="centerY" id="6Ny-mS-qtH"/>
+                                    <constraint firstItem="Y3a-dC-LfR" firstAttribute="centerX" secondItem="aMk-oF-cme" secondAttribute="centerX" id="auC-H2-3XM"/>
+                                    <constraint firstAttribute="height" constant="180" id="uIE-6F-7Ou"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" red="0.8901960784313725" green="0.94509803921568625" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -295,6 +314,9 @@
                             <constraint firstItem="x6G-Gy-aAP" firstAttribute="leading" secondItem="Wd1-HR-7lg" secondAttribute="leading" id="8Sj-O8-lIO"/>
                             <constraint firstItem="wQh-ER-l8X" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="CSB-lg-eHa"/>
                             <constraint firstItem="t6g-Ii-WFL" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="FLd-C0-9NS"/>
+                            <constraint firstItem="aMk-oF-cme" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="RDZ-Aw-w3d"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="aMk-oF-cme" secondAttribute="trailing" id="T0m-ty-Nge"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="aMk-oF-cme" secondAttribute="bottom" id="aO5-iM-QF6"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="wQh-ER-l8X" secondAttribute="trailing" id="eKN-Gp-6Yr"/>
                             <constraint firstItem="t6g-Ii-WFL" firstAttribute="top" secondItem="x6G-Gy-aAP" secondAttribute="bottom" constant="8" symbolic="YES" id="gXU-Oz-BmK"/>
                             <constraint firstItem="wQh-ER-l8X" firstAttribute="top" secondItem="t6g-Ii-WFL" secondAttribute="bottom" id="ga6-79-wAu"/>
@@ -312,6 +334,8 @@
                     <connections>
                         <outlet property="addBtn" destination="AoY-Ao-PT3" id="9FI-He-Ltp"/>
                         <outlet property="calendarBtn" destination="F05-Tm-b1q" id="9he-75-HQI"/>
+                        <outlet property="datePicker" destination="Y3a-dC-LfR" id="zqb-YI-x0v"/>
+                        <outlet property="datePickerView" destination="aMk-oF-cme" id="zWL-P2-9zF"/>
                         <outlet property="inputTextField" destination="m3D-sq-eAk" id="1wH-6e-GaA"/>
                         <outlet property="inputViewBottom" destination="otG-jl-dW0" id="xVG-cd-r42"/>
                         <outlet property="todoCollectionVIew" destination="t6g-Ii-WFL" id="iQG-CW-ClB"/>

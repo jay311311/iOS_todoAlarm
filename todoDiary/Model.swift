@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import simd
 
 struct Todo: Codable,Equatable{
     var id : Int
@@ -15,7 +16,7 @@ struct Todo: Codable,Equatable{
     var isImportant : Bool
     var isDone: Bool
     
-    mutating func update(date:String, title:String, isNotification: Bool,isImportant: Bool,isDone:Bool ){
+    mutating func update(date:String, title:String, isNotification: Bool, isImportant: Bool, isDone:Bool ){
         self.date = date
         self.title = title
         self.isNotification = isNotification
@@ -39,7 +40,7 @@ class TodoManager {
     // - 데이터를 넣을 공간 생성
     var todos:[Todo] = []
     
-    func createTodo(title:String, date : String ) -> Todo {
+    func createTodo(title : String, date : String ) -> Todo {
         let nextId: Int  = TodoManager.lastId + 1
         TodoManager.lastId  = nextId
         return Todo(id: nextId, date: date, title: title, isNotification: false, isImportant: false, isDone: false)
@@ -47,7 +48,6 @@ class TodoManager {
     
     func updateTodo(_ todo :Todo){
         // 데이터 업데이트
-        
         guard let index = todos.firstIndex(of: todo) else { return }
         todos[index].update(date: todo.date, title: todo.title, isNotification: todo.isNotification, isImportant: todo.isImportant, isDone: todo.isDone)
         saveTodo()
@@ -67,12 +67,31 @@ class TodoManager {
     }
     func saveTodo(){
         // 데이터를 json 파일로 저장하러 가기
+        todos = sortedTodo(todos: todos)
         Storage.store(todos, to: .documents, as: "todo.json")
     }
     
+    func sortedTodo(todos :[Todo]) ->[Todo] {
+        // 정렬하는 알고리즘 조사
+            let dateFormater =  DateFormatter()
+        
+            dateFormater.dateFormat =  "yyyy-mm-dd"
+        //guard let test = dateFormater.dateFormat else { return  }
+        
+      let todoSorted =  todos.sorted{(first, second) -> Bool in
+            if first.isImportant != second.isImportant {
+                return first.isImportant
+            }
+            var firstDate:Date = dateFormater.date(from: first.date)!
+            var secondDate:Date = dateFormater.date(from: second.date)!
+            return firstDate < secondDate
+        }
+        return todoSorted
+    }
     func retrieveTodo() {
-        guard let todo =  Storage.retrive("todo.json", from: .documents, as: Todo.self) else {return }
-        todos.append(todo)
+        todos = Storage.retrive("todo.json", from: .documents, as: [Todo].self) ?? []
+        
+        //print(test)
         let lastId = todos.last?.id ?? 0
         TodoManager.lastId = lastId
     }

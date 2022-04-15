@@ -45,23 +45,20 @@ public class Storage{
     
     static func retrive<T: Decodable>(_ fileName: String, from directory: Directory, as type: T.Type) -> T? {
         let url = directory.url.appendingPathComponent(fileName, isDirectory: false)
-        print("---> retrive to here: \(url)")
         guard FileManager.default.fileExists(atPath: url.path) else { return nil }
         guard let data = FileManager.default.contents(atPath: url.path) else { return nil }
-        
+        print("---> retrive to here: \(url)")
+       
         let decoder = JSONDecoder()
-   
+        
         do {
-          
             let model = try decoder.decode(type, from: data)
-            print(model)
             return model
         } catch let error {
-            print(" \(String(describing: error))")
+            print("---> Failed to decode msg: \(error.localizedDescription)")
             return nil
         }
     }
-    
 //    static func remove(_ fileName: String, from directory: Directory) {
 //        let url = directory.url.appendingPathComponent(fileName, isDirectory: false)
 //        guard FileManager.default.fileExists(atPath: url.path) else { return }
