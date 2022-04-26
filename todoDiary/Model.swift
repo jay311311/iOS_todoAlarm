@@ -153,7 +153,7 @@ class TodoViewModel{
         var result:[Todo]  = []
         for (index,todo) in todos.enumerated(){
             let datefommat =  DateFormatter()
-            datefommat.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            datefommat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
           //  datefommat.timeZone = NSTimeZone(name: "UTC") as TimeZone?
             var realDate = datefommat.date(from : todo.date)!
             if realDate >= nowDate {
@@ -171,7 +171,7 @@ class TodoViewModel{
         var result:[Todo]  = []
         for (index,todo) in todos.enumerated(){
             let datefommat =  DateFormatter()
-            datefommat.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            datefommat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
           //  datefommat.timeZone = NSTimeZone(name: "UTC") as TimeZone?
             var realDate = datefommat.date(from : todo.date)!
             if realDate < nowDate {

@@ -91,8 +91,8 @@
 		67CF7F9528045A2D0085FD2B /* ViewControoller */ = {
 			isa = PBXGroup;
 			children = (
-				67CF7F93280456C10085FD2B /* SettingViewController.swift */,
 				673DFE6C27D0ED4B007FA78E /* ViewController.swift */,
+				67CF7F93280456C10085FD2B /* SettingViewController.swift */,
 				6770DC5F27D5011E0076B355 /* TodoController.swift */,
 			);
 			path = ViewControoller;

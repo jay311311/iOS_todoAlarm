@@ -83,8 +83,9 @@ class TodoController: UIViewController {
     }
     
     func saveTodoDate(date: Date) -> String {
-       var nowDate = date.ISO8601Format()
-      //  nowDate = nowDate.components(separatedBy: "T")[0]
+        var nowDate = date.ISO8601Format()
+        nowDate = nowDate.components(separatedBy: "T")[0]
+        nowDate = "\(nowDate)T23:59:59"
        // print("\(nowDate)")
         return nowDate
     }
@@ -143,13 +144,15 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
         if indexPath.section == 0 {
             
         todo =  todoListViewModel.soonTodos[indexPath.item]
-            print("곧 : \(todo)")
+            cell.updateUI(todo: todo)
+           // print("곧 : \(todo)")
         }else{
           todo =  todoListViewModel.doneTodos[indexPath.item]
-            print("끝 : \(todo)")
+            cell.pastUI(todo: todo)
+       //     print("끝 : \(todo)")
         }
         
-        cell.updateUI(todo: todo)
+        
         
         cell.doneCheckBoxTapHandler = { isDone in
             todo.isDone = isDone
@@ -234,7 +237,7 @@ class TodoCellController: UICollectionViewCell  {
     func updateUI(todo : Todo){
         // 셀 업데이트 하기
         checkBox.isSelected = todo.isDone
-        cellDate.text = todo.date
+        cellDate.text = todo.date.components(separatedBy: "T")[0]
         cellTitle.text = todo.title
         cellTitle.alpha = todo.isDone ? 0.2 : 1
         cellDate.alpha = todo.isDone  ? 0.5 : 1
@@ -246,6 +249,19 @@ class TodoCellController: UICollectionViewCell  {
         bell.tintColor =  todo.isNotification ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
         star.tintColor =  todo.isImportant ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
     }
+    
+    func pastUI(todo : Todo){
+        cellDate.text = todo.date.components(separatedBy: "T")[0]
+        cellTitle.text = todo.title
+        cellBox.isUserInteractionEnabled = false
+        deleteBtn.isEnabled = false
+        bell.isEnabled = false
+        star.isEnabled = false
+        checkBox.isEnabled = false
+        cellTitle.alpha = 0.2
+        cellDate.alpha = 0.5
+    }
+   
     
     func reset(){
         let width =  cellBox.bounds.size.width

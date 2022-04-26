@@ -210,14 +210,17 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6G-Gy-aAP">
-                                            <rect key="frame" x="18" y="8" width="88" height="35"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="해야 할 일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6G-Gy-aAP">
+                                            <rect key="frame" x="18" y="15" width="112.5" height="35"/>
                                             <fontDescription key="fontDescription" type="system" weight="black" pointSize="29"/>
                                             <color key="textColor" red="0.039215686274509803" green="0.10588235294117647" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="x6G-Gy-aAP" firstAttribute="leading" secondItem="ZAP-24-Dmk" secondAttribute="leading" constant="18" id="37O-dE-IQf"/>
+                                        <constraint firstItem="x6G-Gy-aAP" firstAttribute="top" secondItem="ZAP-24-Dmk" secondAttribute="top" constant="15" id="Wzf-T2-gBa"/>
+                                    </constraints>
                                     <connections>
                                         <outlet property="sectionTitleLabel" destination="x6G-Gy-aAP" id="rlT-S7-oaf"/>
                                     </connections>
