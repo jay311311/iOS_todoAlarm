@@ -7,6 +7,8 @@
 
 import Foundation
 import simd
+import UserNotifications
+
 
 struct Todo: Codable,Equatable{
     var id : Int
@@ -49,7 +51,9 @@ class TodoManager {
     func updateTodo(_ todo :Todo){
         // 데이터 업데이트
         guard let index = todos.firstIndex(of: todo) else { return }
+        
         todos[index].update(date: todo.date, title: todo.title, isNotification: todo.isNotification, isImportant: todo.isImportant, isDone: todo.isDone)
+        todos = sortedTodo(todos: todos)
         saveTodo()
     }
     
@@ -67,30 +71,53 @@ class TodoManager {
     }
     func saveTodo(){
         // 데이터를 json 파일로 저장하러 가기
-        todos = sortedTodo(todos: todos)
         Storage.store(todos, to: .documents, as: "todo.json")
     }
     
-    func sortedTodo(todos :[Todo]) ->[Todo] {
-        // 정렬하는 알고리즘 조사
-            let dateFormater =  DateFormatter()
+    func makeNotification(_ todo : Todo){
+        // 2. create the notification content
+        let content =  UNMutableNotificationContent()
+        content.title = "hey i'm notification"
+        content.body  =  "\(todo.title)"
+        //3. create the notification trigger
+        let date =  Date()
+        let dateComponents =  Calendar.current.dateComponents([.year, .month, .day], from: date)
+       let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
         
-            dateFormater.dateFormat =  "yyyy-mm-dd"
-        //guard let test = dateFormater.dateFormat else { return  }
+        // let trigger  = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats:false)
+     
+        //4. create the request
+        let uuidString  =  UUID().uuidString
+        let request =  UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
         
-      let todoSorted =  todos.sorted{(first, second) -> Bool in
-            if first.isImportant != second.isImportant {
-                return first.isImportant
-            }
-            var firstDate:Date = dateFormater.date(from: first.date)!
-            var secondDate:Date = dateFormater.date(from: second.date)!
-            return firstDate < secondDate
+        //5. register the request
+        let ceneter1 = UNUserNotificationCenter.current()
+        ceneter1.add(request) { error in
+            // check the error parameter and handle any error
+            print("왜때문데?? \(error?.localizedDescription)")
         }
-        return todoSorted
     }
+    
+    func sortedTodo(todos :[Todo]) ->[Todo] {
+        // 정렬
+//        let dateFormater =  DateFormatter()
+//        dateFormater.dateFormat =  "yyyy-mm-dd"
+//        let todoSorted =  todos.sorted{(first, second) -> Bool in
+//            if first.isImportant != second.isImportant {
+//                return first.isImportant
+//            }
+//
+//      let firstDate:Date = dateFormater.date(from: first.date)!
+//      let secondDate:Date = dateFormater.date(from: second.date)!
+//        return firstDate < secondDate
+//        }
+//       return todoSorted
+        return todos
+    }
+    
     func retrieveTodo() {
         todos = Storage.retrive("todo.json", from: .documents, as: [Todo].self) ?? []
-        
+        todos = sortedTodo(todos: todos)
         //print(test)
         let lastId = todos.last?.id ?? 0
         TodoManager.lastId = lastId
@@ -98,34 +125,65 @@ class TodoManager {
 }
 
 class TodoViewModel{
-    // enum 생략
-//    enum Section: Int, CaseIterable {
-//        case today
-//        case upcoming
-//
-//        var title: String {
-//            switch self {
-//            case .today: return "Today"
-//            default: return "Upcoming"
-//            }
-//        }
-//    }
-//
-    // enum 생략
+    enum Section: Int, CaseIterable {
+        case soon
+        case done
+
+        var title: String {
+            switch self {
+            case .soon: return "Todo"
+            default: return "Done"
+            }
+        }
+    }
+
+   
     
     
     private let manager =  TodoManager.shared
+    
     
     var todos:[Todo] {
         return manager.todos
     }
     
-//    var todayTodos:[Todo]{
-//        return manager.todos.filter { $0.date == Date()}
-//    }
+    var soonTodos:[Todo]{
+      //  var filterdTodos:[Date] = []
+        let nowDate = Date()
+        var result:[Todo]  = []
+        for (index,todo) in todos.enumerated(){
+            let datefommat =  DateFormatter()
+            datefommat.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+          //  datefommat.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+            var realDate = datefommat.date(from : todo.date)!
+            if realDate >= nowDate {
+                result.append(todo)
+            }
+        }
+        
+    //    print("곳 할거 \(result)")
+
+        return result
+    }
     
-    var numOfSection:Int{
-        return manager.todos.count
+    var doneTodos:[Todo]{
+        let nowDate = Date()
+        var result:[Todo]  = []
+        for (index,todo) in todos.enumerated(){
+            let datefommat =  DateFormatter()
+            datefommat.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+          //  datefommat.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+            var realDate = datefommat.date(from : todo.date)!
+            if realDate < nowDate {
+                result.append(todo)
+            }
+        }
+       // print("끝난거 \(result)")
+        return result
+    }
+    
+    var numOfSection: Int {
+        return Section.allCases.count
     }
     
     func addTodo(_ todo:Todo){
