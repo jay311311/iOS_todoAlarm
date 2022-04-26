@@ -24,16 +24,23 @@ class TodoController: UIViewController {
     @IBOutlet weak var datePicker : UIDatePicker!
     
     let todoListViewModel = TodoViewModel()
-    var nowDate = Date()
+    
     var todoDate : String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         todoListViewModel.loadTask()
-        nowDate = Date()
-        datePickerView.isHidden = true
+        var nowDate:Date = Date()
+        todoDate = todoListViewModel.setKoreanDate(date: nowDate)
         
-        todoDate =   saveTodoDate(date: nowDate)
+//        var dateFomatter = DateFormatter()
+//        dateFomatter.timeZone = NSTimeZone(name:"ko_KR") as TimeZone?
+//        dateFomatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+//        var today = dateFomatter.string(from: nowDate)
+     //  let word = dateFomatter.date(from: today)
+        datePickerView.isHidden = true
+        print(todoDate)
+        todoDate =   saveTodoDate(date: todoDate)
 
         NotificationCenter.default.addObserver(self, selector: #selector(adjustInputView), name: UIResponder.keyboardWillShowNotification, object: nil)
         
@@ -82,16 +89,18 @@ class TodoController: UIViewController {
         datePickerView.isHidden = true
     }
     
-    func saveTodoDate(date: Date) -> String {
-        var nowDate = date.ISO8601Format()
-        nowDate = nowDate.components(separatedBy: "T")[0]
-        nowDate = "\(nowDate)T23:59:59"
+    func saveTodoDate(date: String) -> String {
+        var date = date
+        date = date.components(separatedBy: "T")[0]
+        date = "\(date)T23:59:59"
        // print("\(nowDate)")
-        return nowDate
+        return date
     }
     
    @objc  func changeDate (){
-      todoDate = saveTodoDate(date: datePicker.date)
+       var datePicker = datePicker.date
+       var koreanDate = todoListViewModel.setKoreanDate(date: datePicker)
+       todoDate = saveTodoDate(date: koreanDate)
     }
 
 }
@@ -250,13 +259,14 @@ class TodoCellController: UICollectionViewCell  {
             cellTitle.text = todo.title
             cellTitle.alpha = todo.isDone ? 0.2 : 1
             cellDate.alpha = todo.isDone  ? 0.5 : 1
+            cellBox.backgroundColor = todo.isImportant ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .white
             cellTitle.strikeThrough(from: todo.title, at: todo.title, bool: todo.isDone)
             star.isSelected =  todo.isImportant
             bell.isSelected =  todo.isNotification
             star.isEnabled = !todo.isDone
             bell.isEnabled = !todo.isDone
             bell.tintColor =  todo.isNotification ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
-            star.tintColor =  todo.isImportant ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
+            star.tintColor =  todo.isImportant ? .white : .lightGray
            
             
         }else  {
@@ -320,7 +330,8 @@ class TodoCellController: UICollectionViewCell  {
     @IBAction func touchStar(_ sender: UIButton) {
         star.isSelected = !star.isSelected
         let isImportant = star.isSelected
-        star.tintColor = star.isSelected ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
+        cellBox.backgroundColor = star.isSelected ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .white
+        star.tintColor = star.isSelected ? .white : .lightGray
         doneStarTapHandler?(isImportant)
     }
     

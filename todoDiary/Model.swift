@@ -53,7 +53,7 @@ class TodoManager {
         guard let index = todos.firstIndex(of: todo) else { return }
         
         todos[index].update(date: todo.date, title: todo.title, isNotification: todo.isNotification, isImportant: todo.isImportant, isDone: todo.isDone)
-        todos = sortedTodo(todos: todos)
+        
         saveTodo()
     }
     
@@ -72,6 +72,15 @@ class TodoManager {
     func saveTodo(){
         // 데이터를 json 파일로 저장하러 가기
         Storage.store(todos, to: .documents, as: "todo.json")
+//        todos = sortedTodo(todos: todos)
+    }
+    func setKoreanDate(date : Date) -> String{
+      
+        let dateFomatter = DateFormatter()
+        dateFomatter.timeZone = NSTimeZone(name:"ko_KR") as TimeZone?
+        dateFomatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        var today = dateFomatter.string(from: date)
+        return today
     }
     
     func makeNotification(_ todo : Todo){
@@ -98,26 +107,11 @@ class TodoManager {
         }
     }
     
-    func sortedTodo(todos :[Todo]) ->[Todo] {
-        // 정렬
-//        let dateFormater =  DateFormatter()
-//        dateFormater.dateFormat =  "yyyy-mm-dd"
-//        let todoSorted =  todos.sorted{(first, second) -> Bool in
-//            if first.isImportant != second.isImportant {
-//                return first.isImportant
-//            }
-//
-//      let firstDate:Date = dateFormater.date(from: first.date)!
-//      let secondDate:Date = dateFormater.date(from: second.date)!
-//        return firstDate < secondDate
-//        }
-//       return todoSorted
-        return todos
-    }
+    
     
     func retrieveTodo() {
         todos = Storage.retrive("todo.json", from: .documents, as: [Todo].self) ?? []
-        todos = sortedTodo(todos: todos)
+       // todos = sortedTodo(todos: todos)
         //print(test)
         let lastId = todos.last?.id ?? 0
         TodoManager.lastId = lastId
@@ -151,30 +145,30 @@ class TodoViewModel{
         for (index,todo) in todos.enumerated(){
             let datefommat =  DateFormatter()
             datefommat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-          //  datefommat.timeZone = NSTimeZone(name: "UTC") as TimeZone?
             var realDate = datefommat.date(from : todo.date)!
             if realDate >= nowDate {
                 result.append(todo)
             }
         }
-        
-    //    print("곳 할거 \(result)")
-
+        result = sortedTodo(todos: result)
         return result
     }
     
     var doneTodos:[Todo]{
-        let nowDate = Date()
+        var nowDate = Date()
+        let koreanDate = manager.setKoreanDate(date: nowDate)
         var result:[Todo]  = []
         for (index,todo) in todos.enumerated(){
             let datefommat =  DateFormatter()
             datefommat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
           //  datefommat.timeZone = NSTimeZone(name: "UTC") as TimeZone?
             var realDate = datefommat.date(from : todo.date)!
+            var nowDate = datefommat.date(from : koreanDate)!
             if realDate < nowDate {
                 result.append(todo)
             }
         }
+        
        // print("끝난거 \(result)")
         return result
     }
@@ -195,8 +189,27 @@ class TodoViewModel{
     func loadTask(){
         manager.retrieveTodo()
     }
+    func setKoreanDate(date :Date) -> String{
+        return manager.setKoreanDate(date:date )
+    }
     
-    
+    func sortedTodo(todos :[Todo]) ->[Todo] {
+        // 정렬
+     //   print("돌고있니?")
+        let dateFormater =  DateFormatter()
+        dateFormater.dateFormat =  "yyyy-MM-dd'T'HH:mm:ss"
+        let todoSorted =  todos.sorted{(first, second) -> Bool in
+//            if first.isImportant != second.isImportant {
+//                return first.isImportant
+//            }
+
+      let firstDate:Date = dateFormater.date(from: first.date)!
+      let secondDate:Date = dateFormater.date(from: second.date)!
+        return firstDate < secondDate
+        }
+       return todoSorted
+       // return todos
+    }
 }
 
 

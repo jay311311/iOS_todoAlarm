@@ -165,7 +165,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstItem="hsg-24-BGh" firstAttribute="centerY" secondItem="Fn1-8A-EB0" secondAttribute="centerY" id="Bwh-qw-Tzd"/>
