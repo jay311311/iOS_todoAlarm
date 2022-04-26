@@ -136,9 +136,6 @@ class TodoViewModel{
             }
         }
     }
-
-   
-    
     
     private let manager =  TodoManager.shared
     

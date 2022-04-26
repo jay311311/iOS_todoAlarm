@@ -109,7 +109,6 @@ extension TodoController{
         }else {
             inputViewBottom.constant =  0
         }
-        //print("keyboardFram --->\(keyboardFrame)")
     }
     // 키보드에  높이에 따른 인풋뷰 위치 변경
 }
@@ -144,37 +143,46 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
         if indexPath.section == 0 {
             
         todo =  todoListViewModel.soonTodos[indexPath.item]
-            cell.updateUI(todo: todo)
+            DispatchQueue.main.async {
+                cell.updateUI(todo: todo, section : indexPath.section)
+            }
+            
+            cell.doneCheckBoxTapHandler = { isDone in
+                todo.isDone = isDone
+                self.todoListViewModel.updateTodo(todo)
+                self.todoCollectionVIew.reloadItems(at: [indexPath])
+            }
+            
+            
+            cell.doneDeleteButtonTapHandler = {
+                self.todoListViewModel.deleteTodo(todo)
+                self.todoCollectionVIew.reloadItems(at: [indexPath])
+            }
+            
+            cell.doneStarTapHandler = { isImportant in
+                todo.isImportant = isImportant
+                self.todoListViewModel.updateTodo(todo)
+                self.todoCollectionVIew.reloadItems(at: [indexPath])
+            }
+            cell.doneBellTapHandler = { isNotification in
+                todo.isNotification =  isNotification
+                self.todoListViewModel.updateTodo(todo)
+                self.todoCollectionVIew.reloadItems(at: [indexPath])
+            }
+            
+            
            // print("곧 : \(todo)")
         }else{
           todo =  todoListViewModel.doneTodos[indexPath.item]
-            cell.pastUI(todo: todo)
+            DispatchQueue.main.async {
+                cell.updateUI(todo: todo, section : indexPath.section)
+            }
        //     print("끝 : \(todo)")
         }
         
         
-        
-        cell.doneCheckBoxTapHandler = { isDone in
-            todo.isDone = isDone
-            self.todoListViewModel.updateTodo(todo)
-            self.todoCollectionVIew.reloadData()
-        }
-        cell.doneDeleteButtonTapHandler = {
-            self.todoListViewModel.deleteTodo(todo)
-            self.todoCollectionVIew.reloadData()
-        }
-        
-        cell.doneStarTapHandler = { isImportant in
-            todo.isImportant = isImportant
-            self.todoListViewModel.updateTodo(todo)
-            self.todoCollectionVIew.reloadData()
-        }
-        cell.doneBellTapHandler = { isNotification in
-            todo.isNotification =  isNotification
-            self.todoListViewModel.updateTodo(todo)
-            self.todoCollectionVIew.reloadData()
-        }
-        
+       
+      
     
         return cell
     }
@@ -234,34 +242,41 @@ class TodoCellController: UICollectionViewCell  {
         super.prepareForReuse()
         reset()
     }
-    func updateUI(todo : Todo){
-        // 셀 업데이트 하기
-        checkBox.isSelected = todo.isDone
-        cellDate.text = todo.date.components(separatedBy: "T")[0]
-        cellTitle.text = todo.title
-        cellTitle.alpha = todo.isDone ? 0.2 : 1
-        cellDate.alpha = todo.isDone  ? 0.5 : 1
-        cellTitle.strikeThrough(from: todo.title, at: todo.title, bool: todo.isDone)
-        star.isSelected =  todo.isImportant
-        bell.isSelected =  todo.isNotification
-        star.isEnabled = !todo.isDone
-        bell.isEnabled = !todo.isDone
-        bell.tintColor =  todo.isNotification ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
-        star.tintColor =  todo.isImportant ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
+    func updateUI(todo : Todo, section: Int){
+        if section == 0 {
+            // 셀 업데이트 하기
+            checkBox.isSelected = todo.isDone
+            cellDate.text = todo.date.components(separatedBy: "T")[0]
+            cellTitle.text = todo.title
+            cellTitle.alpha = todo.isDone ? 0.2 : 1
+            cellDate.alpha = todo.isDone  ? 0.5 : 1
+            cellTitle.strikeThrough(from: todo.title, at: todo.title, bool: todo.isDone)
+            star.isSelected =  todo.isImportant
+            bell.isSelected =  todo.isNotification
+            star.isEnabled = !todo.isDone
+            bell.isEnabled = !todo.isDone
+            bell.tintColor =  todo.isNotification ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
+            star.tintColor =  todo.isImportant ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
+           
+            
+        }else  {
+            cellDate.text = todo.date.components(separatedBy: "T")[0]
+            cellTitle.text = todo.title
+            cellBox.isUserInteractionEnabled = false
+            deleteBtn.isEnabled = false
+            bell.isEnabled = false
+            star.isEnabled = false
+            checkBox.isEnabled = false
+            cellTitle.alpha = 0.2
+            cellDate.alpha = 0.5
+            
+        }
+       
+       
     }
     
-    func pastUI(todo : Todo){
-        cellDate.text = todo.date.components(separatedBy: "T")[0]
-        cellTitle.text = todo.title
-        cellBox.isUserInteractionEnabled = false
-        deleteBtn.isEnabled = false
-        bell.isEnabled = false
-        star.isEnabled = false
-        checkBox.isEnabled = false
-        cellTitle.alpha = 0.2
-        cellDate.alpha = 0.5
-    }
-   
+  
+
     
     func reset(){
         let width =  cellBox.bounds.size.width
@@ -305,7 +320,7 @@ class TodoCellController: UICollectionViewCell  {
     @IBAction func touchStar(_ sender: UIButton) {
         star.isSelected = !star.isSelected
         let isImportant = star.isSelected
-        star.tintColor = sender.isSelected ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
+        star.tintColor = star.isSelected ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
         doneStarTapHandler?(isImportant)
     }
     
@@ -320,8 +335,8 @@ class TodoCellController: UICollectionViewCell  {
     @IBAction func didTodo(_ sender: UIButton) {
         checkBox.isSelected = !checkBox.isSelected
         let isDone = checkBox.isSelected
-        bell.isEnabled = isDone
-        star.isEnabled = isDone
+        bell.isEnabled = !isDone
+        star.isEnabled = !isDone
         cellTitle.alpha = isDone  ? 0.2 : 1
         cellDate.alpha = isDone  ? 0.5 : 1
         cellTitle.strikeThrough(from: cellTitle.text, at: cellTitle.text, bool: isDone)
