@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 //import Firebase
 //import FirebaseDatabase
 
@@ -29,17 +30,24 @@ class TodoController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         todoListViewModel.loadTask()
-       
+        nowDate = Date()
         datePickerView.isHidden = true
         
-        todoDate =   saveTodoDate(now: nowDate)
+        todoDate =   saveTodoDate(date: nowDate)
 
         NotificationCenter.default.addObserver(self, selector: #selector(adjustInputView), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(adjustInputView), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         datePicker.addTarget(self, action: #selector(changeDate), for: .valueChanged)
-       
+        
+        // 1. ask for permission
+        let center  =  UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) { granted, error in
+            print("알림권한 여부 \(granted)")
+        }
+        
+         
     }
     @IBAction func tapCalendarButton(_ sender: Any) {
         // keyboard 안보이게 처리
@@ -74,15 +82,15 @@ class TodoController: UIViewController {
         datePickerView.isHidden = true
     }
     
-    func saveTodoDate(now: Date) -> String {
-       var nowDate = now.ISO8601Format()
-        nowDate = nowDate.components(separatedBy: "T")[0]
+    func saveTodoDate(date: Date) -> String {
+       var nowDate = date.ISO8601Format()
+      //  nowDate = nowDate.components(separatedBy: "T")[0]
        // print("\(nowDate)")
         return nowDate
     }
     
    @objc  func changeDate (){
-      todoDate = saveTodoDate(now: datePicker.date)
+      todoDate = saveTodoDate(date: datePicker.date)
     }
 
 }
@@ -106,17 +114,41 @@ extension TodoController{
 }
 
 extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        //todo : 섹션 몇개?
         return todoListViewModel.numOfSection
     }
+    
+    
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //todo : 섹션 아이템 몇개
+        if section == 0 {
+           return todoListViewModel.soonTodos.count
+        }else {
+            return todoListViewModel.doneTodos.count
+        }
+    }
+    
+    
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? TodoCellController else {
             return UICollectionViewCell()
         }
+        
         var todo : Todo
-        todo = todoListViewModel.todos[indexPath.item]
+        
+        if indexPath.section == 0 {
+            
+        todo =  todoListViewModel.soonTodos[indexPath.item]
+            print("곧 : \(todo)")
+        }else{
+          todo =  todoListViewModel.doneTodos[indexPath.item]
+            print("끝 : \(todo)")
+        }
+        
         cell.updateUI(todo: todo)
         
         cell.doneCheckBoxTapHandler = { isDone in
@@ -134,15 +166,31 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
             self.todoListViewModel.updateTodo(todo)
             self.todoCollectionVIew.reloadData()
         }
+        cell.doneBellTapHandler = { isNotification in
+            todo.isNotification =  isNotification
+            self.todoListViewModel.updateTodo(todo)
+            self.todoCollectionVIew.reloadData()
+        }
         
-       
-//        cell.layer.cornerRadius = 10.0
-//        cell.layer.borderWidth = 0.0
-//        cell.layer.masksToBounds = false
-        
+    
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TodoListHeader", for: indexPath) as? TodoListHeader else {
+                return UICollectionReusableView()
+            }
+            guard let section = TodoViewModel.Section(rawValue: indexPath.section) else {
+                return UICollectionReusableView()
+            }
+            header.sectionTitleLabel.text = section.title
+            return header
+        default:
+            return UICollectionReusableView()
+        }
+    }
 }
 
 extension TodoController : UICollectionViewDelegateFlowLayout{
@@ -195,8 +243,8 @@ class TodoCellController: UICollectionViewCell  {
         bell.isSelected =  todo.isNotification
         star.isEnabled = !todo.isDone
         bell.isEnabled = !todo.isDone
-        star.tintColor =  todo.isImportant ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
-        bell.tintColor =  todo.isNotification ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
+        bell.tintColor =  todo.isNotification ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
+        star.tintColor =  todo.isImportant ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
     }
     
     func reset(){
@@ -239,16 +287,17 @@ class TodoCellController: UICollectionViewCell  {
   
     
     @IBAction func touchStar(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        var isImportant = sender.isSelected
-        star.tintColor = sender.isSelected ?UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
+        star.isSelected = !star.isSelected
+        let isImportant = star.isSelected
+        star.tintColor = sender.isSelected ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .lightGray
         doneStarTapHandler?(isImportant)
     }
     
     @IBAction func touchBell(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        bell.tintColor   = sender.isSelected ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
-        
+        bell.isSelected = !bell.isSelected
+        let isNotification = bell.isSelected
+        bell.tintColor   = bell.isSelected ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0): .lightGray
+        doneBellTapHandler?(isNotification)
     }
     
 
@@ -286,3 +335,14 @@ extension UILabel{
            self.attributedText = attributedString
        }
 }
+
+class TodoListHeader : UICollectionReusableView{
+    
+    @IBOutlet weak var sectionTitleLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+
