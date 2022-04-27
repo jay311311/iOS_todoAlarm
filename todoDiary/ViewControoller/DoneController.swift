@@ -65,7 +65,7 @@ class DoneCellController: UICollectionViewCell {
     
     func pastUI(todo : Todo){
         checkBox.isSelected = todo.isDone
-        cellDate.text = todo.date.components(separatedBy: "T")[0]
+        cellDate.text = todo.date.components(separatedBy: " ")[0]
         cellTitle.text = todo.title
         cellTitle.alpha = 0.5
         cellBox.backgroundColor = todo.isImportant ? UIColor(red: 255/255, green: 202/255, blue: 40/255, alpha: 1.0) : .white

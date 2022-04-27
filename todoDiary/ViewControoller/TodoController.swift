@@ -31,7 +31,6 @@ class TodoController: UIViewController {
         todoDate =   saveTodoDate(date: todoDate)
 
         NotificationCenter.default.addObserver(self, selector: #selector(adjustInputView), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(adjustInputView), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         datePicker.addTarget(self, action: #selector(changeDate), for: .valueChanged)
@@ -41,8 +40,6 @@ class TodoController: UIViewController {
         center.requestAuthorization(options: [.alert, .sound]) { granted, error in
             print("알림권한 여부 \(granted)")
         }
-        
-         
     }
     @IBAction func tapCalendarButton(_ sender: Any) {
         // keyboard 안보이게 처리
@@ -53,7 +50,6 @@ class TodoController: UIViewController {
         calendarBtn.isSelected = !calendarBtn.isSelected
         datePickerView.isHidden = !calendarBtn.isSelected
         inputViewBottom.constant = calendarBtn.isSelected ? datePickerView.bounds.height : 0
-
         datePicker.minimumDate =  Date()
     }
     
@@ -80,7 +76,7 @@ class TodoController: UIViewController {
     func saveTodoDate(date: String) -> String {
         var date = date
         date = date.components(separatedBy: "T")[0]
-        date = "\(date)T23:59:59"
+        date = "\(date) 23:59:59 +000"
        // print("\(nowDate)")
         return date
     }
@@ -112,37 +108,24 @@ extension TodoController{
 
 extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate{
 
-    
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //todo : 섹션 아이템 몇개
-  
            return todoListViewModel.soonTodos.count
-        
     }
-    
-    
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? TodoCellController else {
             return UICollectionViewCell()
         }
         
-        var todo : Todo
-        
-            
-        todo =  todoListViewModel.soonTodos[indexPath.item]
-            DispatchQueue.main.async {
+        var todo : Todo =  todoListViewModel.soonTodos[indexPath.item]
                 cell.updateUI(todo: todo)
-            }
             
             cell.doneCheckBoxTapHandler = { isDone in
                 todo.isDone = isDone
                 self.todoListViewModel.updateTodo(todo)
                 self.todoCollectionVIew.reloadItems(at: [indexPath])
             }
-            
             
             cell.doneDeleteButtonTapHandler = {
                 self.todoListViewModel.deleteTodo(todo)
@@ -156,42 +139,15 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
             }
             cell.doneBellTapHandler = { isNotification in
                 todo.isNotification =  isNotification
+                var dateSlice:String = todo.date.components(separatedBy: " ")[0]
+                print("\(dateSlice) \(self.todoListViewModel.notificationTime)+0000 에 push알림 됩니다")
+                self.todoListViewModel.setNotificationTime(todo, date:"\(dateSlice) \(self.todoListViewModel.notificationTime) +0000")
                 self.todoListViewModel.updateTodo(todo)
                 self.todoCollectionVIew.reloadItems(at: [indexPath])
             }
-            
-            
-           // print("곧 : \(todo)")
-//        }else{
-//          todo =  todoListViewModel.doneTodos[indexPath.item]
-//            DispatchQueue.main.async {
-//                cell.updateUI(todo: todo, section : indexPath.section)
-//            }
-//       //     print("끝 : \(todo)")
-//        }
-        
-        
-       
-      
-    
+
         return cell
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        switch kind {
-//        case UICollectionView.elementKindSectionHeader:
-//            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TodoListHeader", for: indexPath) as? TodoListHeader else {
-//                return UICollectionReusableView()
-//            }
-//            guard let section = TodoViewModel.Section(rawValue: indexPath.section) else {
-//                return UICollectionReusableView()
-//            }
-//            header.sectionTitleLabel.text = section.title
-//            return header
-//        default:
-//            return UICollectionReusableView()
-//        }
-//    }
 }
 
 extension TodoController : UICollectionViewDelegateFlowLayout{
@@ -201,8 +157,6 @@ extension TodoController : UICollectionViewDelegateFlowLayout{
         return CGSize(width: width, height: height)
     }
 }
-
-
 
 class TodoCellController: UICollectionViewCell  {
     
@@ -226,17 +180,15 @@ class TodoCellController: UICollectionViewCell  {
         configSwipeBtn()
         self.contentView.layer.cornerRadius = 10.0
         self.contentView.layer.zPosition = 1
-        reset()
     }
     override func prepareForReuse() {
         super.prepareForReuse()
         reset()
     }
     func updateUI(todo : Todo){
-    
             // 셀 업데이트 하기
             checkBox.isSelected = todo.isDone
-            cellDate.text = todo.date.components(separatedBy: "T")[0]
+            cellDate.text = todo.date.components(separatedBy: " ")[0]
             cellTitle.text = todo.title
             cellTitle.alpha = todo.isDone ? 0.2 : 1
             cellDate.alpha = todo.isDone  ? 0.5 : 1
@@ -270,11 +222,10 @@ class TodoCellController: UICollectionViewCell  {
     }
     
     @objc func swipBtn(_ sender : UISwipeGestureRecognizer){
-            if let swipeGesture = sender as? UISwipeGestureRecognizer{
             let width =  cellBox.bounds.size.width
             let height = cellBox.bounds.size.height
             let swipeBoxWidth = swipeBox.bounds.size.width
-            switch swipeGesture.direction{
+            switch sender.direction{
             case .left :
                 UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseOut, animations: {
                     self.cellBox.frame = CGRect(x: -swipeBoxWidth, y: 0.0, width: width, height: height)
@@ -285,7 +236,7 @@ class TodoCellController: UICollectionViewCell  {
                 }, completion: nil)
             default:break
             }
-        }
+        
     }
   
     
@@ -304,7 +255,6 @@ class TodoCellController: UICollectionViewCell  {
         doneBellTapHandler?(isNotification)
     }
     
-
     @IBAction func didTodo(_ sender: UIButton) {
         checkBox.isSelected = !checkBox.isSelected
         let isDone = checkBox.isSelected
@@ -315,16 +265,11 @@ class TodoCellController: UICollectionViewCell  {
         cellTitle.strikeThrough(from: cellTitle.text, at: cellTitle.text, bool: isDone)
         doneCheckBoxTapHandler?(isDone)
     }
-    
     @IBAction func didDelete(_ sender: UIButton) {
         doneDeleteButtonTapHandler?()
     }
     
 }
-
-
-
-
 
 extension UILabel{
     // 취소선 toggle 기능
@@ -339,14 +284,3 @@ extension UILabel{
            self.attributedText = attributedString
        }
 }
-
-//class TodoListHeader : UICollectionReusableView{
-//
-//    @IBOutlet weak var sectionTitleLabel: UILabel!
-//
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//    }
-//}
-//
-//

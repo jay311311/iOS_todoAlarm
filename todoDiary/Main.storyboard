@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Settings-->
+        <!--설정-->
         <scene sceneID="Ve5-hH-JES">
             <objects>
                 <viewController id="IiF-YF-Me4" customClass="SettingController" customModule="todoDiary" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,19 +18,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Done" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfq-zo-1VX">
+                                <rect key="frame" x="20" y="64" width="71.5" height="33.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
+                                <color key="textColor" red="0.039215686270000001" green="0.1058823529" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="SlA-tp-Qd2">
                                 <rect key="frame" x="0.0" y="97.5" width="414" height="715.5"/>
                                 <color key="backgroundColor" red="0.89019607840000003" green="0.94509803920000002" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="qYN-z5-HjC" customClass="SettingCellController" customModule="todoDiary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="41.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="41"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qYN-z5-HjC" id="QTG-gL-dtD">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCf-9f-CLu">
-                                                    <rect key="frame" x="20" y="10" width="42" height="21.5"/>
+                                                    <rect key="frame" x="20" y="10" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -53,12 +59,6 @@
                                     <outlet property="delegate" destination="IiF-YF-Me4" id="XdJ-FL-2gb"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Done" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfq-zo-1VX">
-                                <rect key="frame" x="20" y="64" width="71.5" height="33.5"/>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
-                                <color key="textColor" red="0.039215686270000001" green="0.1058823529" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="RAb-jE-5lf"/>
                         <color key="backgroundColor" red="0.8901960784313725" green="0.94509803921568625" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -71,7 +71,7 @@
                             <constraint firstItem="SlA-tp-Qd2" firstAttribute="leading" secondItem="2Gb-Za-nVm" secondAttribute="leading" id="kHx-pD-rLo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settings" image="gearshape.circle" catalog="system" selectedImage="gearshape.circle.fill" id="lAw-KV-dXI"/>
+                    <tabBarItem key="tabBarItem" title="설정" image="gearshape.circle" catalog="system" selectedImage="gearshape.circle.fill" id="lAw-KV-dXI"/>
                     <connections>
                         <outlet property="tableView" destination="SlA-tp-Qd2" id="nZF-Vn-8Gh"/>
                     </connections>
@@ -80,7 +80,7 @@
             </objects>
             <point key="canvasLocation" x="828.98550724637687" y="859.82142857142856"/>
         </scene>
-        <!--Todo-->
+        <!--할 일-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController storyboardIdentifier="TodoView" id="Y6W-OH-hqX" customClass="TodoController" customModule="todoDiary" customModuleProvider="target" sceneMemberID="viewController">
@@ -88,8 +88,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Todo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wd1-HR-7lg">
-                                <rect key="frame" x="20" y="64" width="66.5" height="33.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="할 일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wd1-HR-7lg">
+                                <rect key="frame" x="20" y="64" width="54.5" height="33.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
                                 <color key="textColor" red="0.039215686274509803" green="0.10588235294117647" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -334,7 +334,7 @@
                             <outletCollection property="gestureRecognizers" destination="qSF-tl-7Nu" appends="YES" id="rwO-16-4Zr"/>
                         </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Todo" image="list.bullet.circle" catalog="system" selectedImage="list.bullet.circle.fill" id="PW1-yh-q6t">
+                    <tabBarItem key="tabBarItem" title="할 일" image="list.bullet.circle" catalog="system" selectedImage="list.bullet.circle.fill" id="PW1-yh-q6t">
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <connections>
@@ -356,7 +356,7 @@
             </objects>
             <point key="canvasLocation" x="-686.95652173913049" y="845.75892857142856"/>
         </scene>
-        <!--Done-->
+        <!--지난 일-->
         <scene sceneID="hUY-KY-3LV">
             <objects>
                 <viewController id="9qc-gr-7nW" customClass="DoneController" customModule="todoDiary" customModuleProvider="target" sceneMemberID="viewController">
@@ -364,8 +364,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Done" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JE0-vh-gK7">
-                                <rect key="frame" x="20" y="64" width="71.5" height="33.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="지난 일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JE0-vh-gK7">
+                                <rect key="frame" x="20" y="64" width="78.5" height="33.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
                                 <color key="textColor" red="0.039215686270000001" green="0.1058823529" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -498,7 +498,7 @@
                             <constraint firstItem="JE0-vh-gK7" firstAttribute="leading" secondItem="ocG-4s-7bQ" secondAttribute="leading" constant="20" id="tPH-oh-Cr8"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Done" image="archivebox.circle" catalog="system" selectedImage="archivebox.circle.fill" id="H4C-Wh-fKj"/>
+                    <tabBarItem key="tabBarItem" title="지난 일" image="archivebox.circle" catalog="system" selectedImage="archivebox.circle.fill" id="H4C-Wh-fKj"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="todoCollectionVIew" destination="kFU-3N-dOY" id="sxD-qz-30l"/>
