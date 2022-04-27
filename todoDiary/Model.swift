@@ -39,9 +39,9 @@ class TodoManager {
     // - 아이디 생성
     static var lastId: Int  = 0
     
-    // - notificationTime
-    var notificationTime:String = "00:00:00"
-    
+//    // - notificationTime
+//    var notificationTime:String = "00:00:00"
+//    
     // - 데이터를 넣을 공간 생성
     var todos:[Todo] = []
     
@@ -81,14 +81,17 @@ class TodoManager {
         return today
     }
     
-    func setNotificationTime(_ todo : Todo, date:String){
-        // 2. create the notification content
+    func setNotificationTime(_ todo : Todo, date:String, identifier:Int, isNotification:Bool){
+        let uuidString  =  String(identifier)
+        
+        if isNotification {
+            // 2. create the notification content
+
         let content =  UNMutableNotificationContent()
         content.title = "hey i'm notification"
         content.body  =  "\(todo.title)"
         
         //3. create the notification trigger
-    //    var koreanTime : String = setKoreanDate(date: date)
         print("들어온 값 :\(date)")
         let dateFomatter = DateFormatter()
         dateFomatter.dateFormat = "yyyy-MM-dd HH:mm:ss +0000"
@@ -99,15 +102,25 @@ class TodoManager {
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
         
         //4. create the request
-        let uuidString  =  UUID().uuidString
+        
         let request =  UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
         
         //5. register the request
-        let ceneter1 = UNUserNotificationCenter.current()
-        ceneter1.add(request) { error in
+       
+        let ceneter = UNUserNotificationCenter.current()
+        ceneter.add(request) { error in
             print("왜때문데?? \(String(describing: error?.localizedDescription))")
         }
+        } else{
+            print("헤제를 눌렀다")
+            let center = UNUserNotificationCenter.current()
+            center.removeDeliveredNotifications(withIdentifiers: [uuidString])
+            center.removePendingNotificationRequests(withIdentifiers: [uuidString])
+            
+        }
     }
+    
+   
     
     func retrieveTodo() {
         todos = Storage.retrive("todo.json", from: .documents, as: [Todo].self) ?? []
@@ -174,8 +187,8 @@ class TodoViewModel{
     func setKoreanDate(date :Date) -> String{
         return manager.setKoreanDate(date:date )
     }
-    func setNotificationTime(_ todo: Todo, date : String){
-        return manager.setNotificationTime(todo, date: date)
+    func setNotificationTime(_ todo: Todo, date : String, identifier :Int, isNotification:Bool){
+        return manager.setNotificationTime(todo, date: date, identifier : identifier, isNotification: isNotification )
     }
     
     func sortedTodo(todos :[Todo]) ->[Todo] {
@@ -193,7 +206,7 @@ class TodoViewModel{
        return todoSorted
     }
     
-    var notificationTime: String { return manager.notificationTime }
+  //  var notificationTime: String { return manager.notificationTime }
 }
 
 

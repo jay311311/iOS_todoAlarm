@@ -12,7 +12,7 @@ class SettingController: UIViewController {
 
     
     @IBOutlet weak var tableView: UITableView!
-    var settingItems = [ "전체 데이터 삭제","알림 시간 변경"]
+    var settingItems = [ "전체 데이터 삭제","PUSH 알림"]
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,11 +30,7 @@ extension SettingController: UITableViewDelegate, UITableViewDataSource{
         guard let cell  = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? SettingCellController  else  { return UITableViewCell() }
         cell.SettingTitle.text = settingItems[indexPath.row]
         if settingItems[indexPath.row] == settingItems[1] {
-            print(settingItems[1])
             cell.datePickerUI()
-          //  datePicker.addTarget(self, action: #selector(cell.setTime), for: .valueChanged)
-           
-           
         }
         
         return cell
@@ -65,13 +61,17 @@ extension SettingController: UITableViewDelegate, UITableViewDataSource{
 
 class SettingCellController : UITableViewCell {
     
+    var todoListViewModel = TodoViewModel()
+    var manager =  TodoManager.shared
+
     @IBOutlet weak var SettingTitle: UILabel!
-   // var time:Date = Date()
     var handlerNotificationTime : (()->Void)?
     var datePicker = UIDatePicker()
     func datePickerUI(){
-       // var datePicker = UIDatePicker()
         datePicker.datePickerMode = .time
+        datePicker.locale = Locale(identifier: "ko-KR")
+        datePicker.timeZone = .autoupdatingCurrent
+        print("여기서는? \(datePicker.date)")
         self.addSubview(datePicker)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
@@ -82,7 +82,11 @@ class SettingCellController : UITableViewCell {
    
     
     @objc func changeTime(){
-        print(datePicker.date)
+        var changeTime = datePicker.date
+        var date:String = todoListViewModel.setKoreanDate(date: changeTime)
+        print("여기는 어떠냐?\(date)")
+        date = date.components(separatedBy: " ")[1]
+        UserDefaults.standard.set(date, forKey: "notificationTime")
     }
     
     

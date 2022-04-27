@@ -20,14 +20,7 @@ class TodoController: UIViewController {
         todoListViewModel.loadTask()
         let nowDate:Date = Date()
         todoDate = todoListViewModel.setKoreanDate(date: nowDate)
-        
-//        var dateFomatter = DateFormatter()
-//        dateFomatter.timeZone = NSTimeZone(name:"ko_KR") as TimeZone?
-//        dateFomatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-//        var today = dateFomatter.string(from: nowDate)
-     //  let word = dateFomatter.date(from: today)
         datePickerView.isHidden = true
-        print(todoDate)
         todoDate =   saveTodoDate(date: todoDate)
 
         NotificationCenter.default.addObserver(self, selector: #selector(adjustInputView), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -75,9 +68,8 @@ class TodoController: UIViewController {
     
     func saveTodoDate(date: String) -> String {
         var date = date
-        date = date.components(separatedBy: "T")[0]
+        date = date.components(separatedBy: " ")[0]
         date = "\(date) 23:59:59 +000"
-       // print("\(nowDate)")
         return date
     }
     
@@ -139,9 +131,10 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
             }
             cell.doneBellTapHandler = { isNotification in
                 todo.isNotification =  isNotification
-                var dateSlice:String = todo.date.components(separatedBy: " ")[0]
-                print("\(dateSlice) \(self.todoListViewModel.notificationTime)+0000 에 push알림 됩니다")
-                self.todoListViewModel.setNotificationTime(todo, date:"\(dateSlice) \(self.todoListViewModel.notificationTime) +0000")
+                let notificationTime:String = UserDefaults.standard.string(forKey: "notificationTime")!
+                let dateSlice:String = todo.date.components(separatedBy: " ")[0]
+                print("\(dateSlice) \(notificationTime)+0000 에 push알림 됩니다")
+                self.todoListViewModel.setNotificationTime(todo, date:"\(dateSlice) \(notificationTime) +0000", identifier: todo.id, isNotification: isNotification)
                 self.todoListViewModel.updateTodo(todo)
                 self.todoCollectionVIew.reloadItems(at: [indexPath])
             }
@@ -252,7 +245,13 @@ class TodoCellController: UICollectionViewCell  {
         bell.isSelected = !bell.isSelected
         let isNotification = bell.isSelected
         bell.tintColor   = bell.isSelected ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0): .lightGray
-        doneBellTapHandler?(isNotification)
+        let notiTime =  UserDefaults.standard.string(forKey: "notificationTime")
+        if notiTime == nil{
+            print("설정 > 알림시간을 설정해 주세요")
+        }else {
+            doneBellTapHandler?(isNotification)
+        }
+        
     }
     
     @IBAction func didTodo(_ sender: UIButton) {
