@@ -131,11 +131,10 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
         
         var todo : Todo
         
-//        if indexPath.section == 0 {
             
         todo =  todoListViewModel.soonTodos[indexPath.item]
             DispatchQueue.main.async {
-                cell.updateUI(todo: todo, section : indexPath.section)
+                cell.updateUI(todo: todo)
             }
             
             cell.doneCheckBoxTapHandler = { isDone in
@@ -198,7 +197,7 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
 extension TodoController : UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width:CGFloat =  collectionView.bounds.width - 30
-        let height:CGFloat = 75
+        let height:CGFloat = 70
         return CGSize(width: width, height: height)
     }
 }
@@ -233,7 +232,7 @@ class TodoCellController: UICollectionViewCell  {
         super.prepareForReuse()
         reset()
     }
-    func updateUI(todo : Todo, section: Int){
+    func updateUI(todo : Todo){
     
             // 셀 업데이트 하기
             checkBox.isSelected = todo.isDone
@@ -249,27 +248,8 @@ class TodoCellController: UICollectionViewCell  {
             bell.isEnabled = !todo.isDone
             bell.tintColor =  todo.isNotification ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0) : .lightGray
             star.tintColor =  todo.isImportant ? .white : .lightGray
-           
-            
-//        }else  {
-//            cellDate.text = todo.date.components(separatedBy: "T")[0]
-//            cellTitle.text = todo.title
-//            cellBox.isUserInteractionEnabled = false
-//            deleteBtn.isEnabled = false
-//            bell.isEnabled = false
-//            star.isEnabled = false
-//            checkBox.isEnabled = false
-//            cellTitle.alpha = 0.2
-//            cellDate.alpha = 0.5
-//
-//        }
-       
-       
     }
-    
-  
 
-    
     func reset(){
         let width =  cellBox.bounds.size.width
         let height = cellBox.bounds.size.height
