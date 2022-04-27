@@ -1,20 +1,8 @@
-
-//
-//  TodoController.swift
-//  todoDiary
-//
-//  Created by Jooeun Kim on 2022/03/06.
-//
-
 import UIKit
 import UserNotifications
-//import Firebase
-//import FirebaseDatabase
 
 class TodoController: UIViewController {
-//    var i  = 0
 
-    
     @IBOutlet weak var todoCollectionVIew: UICollectionView!
     @IBOutlet weak var inputViewBottom: NSLayoutConstraint!
     @IBOutlet weak var inputTextField : UITextField!
@@ -30,7 +18,7 @@ class TodoController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         todoListViewModel.loadTask()
-        var nowDate:Date = Date()
+        let nowDate:Date = Date()
         todoDate = todoListViewModel.setKoreanDate(date: nowDate)
         
 //        var dateFomatter = DateFormatter()
@@ -98,8 +86,8 @@ class TodoController: UIViewController {
     }
     
    @objc  func changeDate (){
-       var datePicker = datePicker.date
-       var koreanDate = todoListViewModel.setKoreanDate(date: datePicker)
+       let datePicker = datePicker.date
+       let koreanDate = todoListViewModel.setKoreanDate(date: datePicker)
        todoDate = saveTodoDate(date: koreanDate)
     }
 
@@ -123,20 +111,14 @@ extension TodoController{
 }
 
 extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate{
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        //todo : 섹션 몇개?
-        return todoListViewModel.numOfSection
-    }
-    
+
     
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //todo : 섹션 아이템 몇개
-        if section == 0 {
+  
            return todoListViewModel.soonTodos.count
-        }else {
-            return todoListViewModel.doneTodos.count
-        }
+        
     }
     
     
@@ -149,7 +131,7 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
         
         var todo : Todo
         
-        if indexPath.section == 0 {
+//        if indexPath.section == 0 {
             
         todo =  todoListViewModel.soonTodos[indexPath.item]
             DispatchQueue.main.async {
@@ -181,13 +163,13 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
             
             
            // print("곧 : \(todo)")
-        }else{
-          todo =  todoListViewModel.doneTodos[indexPath.item]
-            DispatchQueue.main.async {
-                cell.updateUI(todo: todo, section : indexPath.section)
-            }
-       //     print("끝 : \(todo)")
-        }
+//        }else{
+//          todo =  todoListViewModel.doneTodos[indexPath.item]
+//            DispatchQueue.main.async {
+//                cell.updateUI(todo: todo, section : indexPath.section)
+//            }
+//       //     print("끝 : \(todo)")
+//        }
         
         
        
@@ -196,21 +178,21 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TodoListHeader", for: indexPath) as? TodoListHeader else {
-                return UICollectionReusableView()
-            }
-            guard let section = TodoViewModel.Section(rawValue: indexPath.section) else {
-                return UICollectionReusableView()
-            }
-            header.sectionTitleLabel.text = section.title
-            return header
-        default:
-            return UICollectionReusableView()
-        }
-    }
+//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        switch kind {
+//        case UICollectionView.elementKindSectionHeader:
+//            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TodoListHeader", for: indexPath) as? TodoListHeader else {
+//                return UICollectionReusableView()
+//            }
+//            guard let section = TodoViewModel.Section(rawValue: indexPath.section) else {
+//                return UICollectionReusableView()
+//            }
+//            header.sectionTitleLabel.text = section.title
+//            return header
+//        default:
+//            return UICollectionReusableView()
+//        }
+//    }
 }
 
 extension TodoController : UICollectionViewDelegateFlowLayout{
@@ -252,7 +234,7 @@ class TodoCellController: UICollectionViewCell  {
         reset()
     }
     func updateUI(todo : Todo, section: Int){
-        if section == 0 {
+    
             // 셀 업데이트 하기
             checkBox.isSelected = todo.isDone
             cellDate.text = todo.date.components(separatedBy: "T")[0]
@@ -269,18 +251,18 @@ class TodoCellController: UICollectionViewCell  {
             star.tintColor =  todo.isImportant ? .white : .lightGray
            
             
-        }else  {
-            cellDate.text = todo.date.components(separatedBy: "T")[0]
-            cellTitle.text = todo.title
-            cellBox.isUserInteractionEnabled = false
-            deleteBtn.isEnabled = false
-            bell.isEnabled = false
-            star.isEnabled = false
-            checkBox.isEnabled = false
-            cellTitle.alpha = 0.2
-            cellDate.alpha = 0.5
-            
-        }
+//        }else  {
+//            cellDate.text = todo.date.components(separatedBy: "T")[0]
+//            cellTitle.text = todo.title
+//            cellBox.isUserInteractionEnabled = false
+//            deleteBtn.isEnabled = false
+//            bell.isEnabled = false
+//            star.isEnabled = false
+//            checkBox.isEnabled = false
+//            cellTitle.alpha = 0.2
+//            cellDate.alpha = 0.5
+//
+//        }
        
        
     }
@@ -378,13 +360,13 @@ extension UILabel{
        }
 }
 
-class TodoListHeader : UICollectionReusableView{
-    
-    @IBOutlet weak var sectionTitleLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-}
-
-
+//class TodoListHeader : UICollectionReusableView{
+//
+//    @IBOutlet weak var sectionTitleLabel: UILabel!
+//
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//    }
+//}
+//
+//
