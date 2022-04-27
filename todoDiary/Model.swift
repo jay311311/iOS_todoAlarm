@@ -79,7 +79,7 @@ class TodoManager {
         let dateFomatter = DateFormatter()
         dateFomatter.timeZone = NSTimeZone(name:"ko_KR") as TimeZone?
         dateFomatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        var today = dateFomatter.string(from: date)
+        let today = dateFomatter.string(from: date)
         return today
     }
     
@@ -103,7 +103,7 @@ class TodoManager {
         let ceneter1 = UNUserNotificationCenter.current()
         ceneter1.add(request) { error in
             // check the error parameter and handle any error
-            print("왜때문데?? \(error?.localizedDescription)")
+            print("왜때문데?? \(String(describing: error?.localizedDescription))")
         }
     }
     
@@ -145,7 +145,7 @@ class TodoViewModel{
         for (index,todo) in todos.enumerated(){
             let datefommat =  DateFormatter()
             datefommat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-            var realDate = datefommat.date(from : todo.date)!
+            let realDate = datefommat.date(from : todo.date)!
             if realDate >= nowDate {
                 result.append(todo)
             }
@@ -155,15 +155,15 @@ class TodoViewModel{
     }
     
     var doneTodos:[Todo]{
-        var nowDate = Date()
+        let nowDate = Date()
         let koreanDate = manager.setKoreanDate(date: nowDate)
         var result:[Todo]  = []
         for (index,todo) in todos.enumerated(){
             let datefommat =  DateFormatter()
             datefommat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
           //  datefommat.timeZone = NSTimeZone(name: "UTC") as TimeZone?
-            var realDate = datefommat.date(from : todo.date)!
-            var nowDate = datefommat.date(from : koreanDate)!
+            let realDate = datefommat.date(from : todo.date)!
+            let nowDate = datefommat.date(from : koreanDate)!
             if realDate < nowDate {
                 result.append(todo)
             }

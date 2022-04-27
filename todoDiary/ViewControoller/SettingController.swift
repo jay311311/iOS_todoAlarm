@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingViewController: UIViewController {
+class SettingController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -19,7 +19,7 @@ class SettingViewController: UIViewController {
 
 }
 
-extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
+extension SettingController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
