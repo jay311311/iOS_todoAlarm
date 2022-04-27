@@ -36,7 +36,7 @@ extension DoneController : UICollectionViewDelegate, UICollectionViewDataSource{
         
         return cell
     }
-    
+  
     
 }
 
@@ -77,6 +77,6 @@ class DoneCellController: UICollectionViewCell {
         star.isUserInteractionEnabled = false
         bell.isUserInteractionEnabled = false
        cellBox.isUserInteractionEnabled = false
-
     }
+    
 }
