@@ -31,7 +31,8 @@ class TodoController: UIViewController {
         // 1. ask for permission
         let center  =  UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound]) { granted, error in
-            print("알림권한 여부 \(granted)")
+            print(granted)
+            UserDefaults.standard.set(granted, forKey: "notificationPermission")
         }
     }
     @IBAction func tapCalendarButton(_ sender: Any) {
@@ -41,6 +42,7 @@ class TodoController: UIViewController {
         
         //isSelected에 따른 ui 하단 변화
         calendarBtn.isSelected = !calendarBtn.isSelected
+        calendarBtn.tintColor = calendarBtn.isSelected ? .tintColor : .lightGray
         datePickerView.isHidden = !calendarBtn.isSelected
         inputViewBottom.constant = calendarBtn.isSelected ? datePickerView.bounds.height : 0
         datePicker.minimumDate =  Date()
@@ -64,6 +66,7 @@ class TodoController: UIViewController {
         inputTextField.resignFirstResponder()
         calendarBtn.isSelected =  false
         datePickerView.isHidden = true
+        inputViewBottom.constant =  0
     }
     
     func saveTodoDate(date: String) -> String {
@@ -109,7 +112,7 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? TodoCellController else {
             return UICollectionViewCell()
         }
-        
+        cell.viewController = self
         var todo : Todo =  todoListViewModel.soonTodos[indexPath.item]
                 cell.updateUI(todo: todo)
             
@@ -133,7 +136,7 @@ extension TodoController : UICollectionViewDataSource,  UICollectionViewDelegate
                 todo.isNotification =  isNotification
                 let notificationTime:String = UserDefaults.standard.string(forKey: "notificationTime")!
                 let dateSlice:String = todo.date.components(separatedBy: " ")[0]
-                print("\(dateSlice) \(notificationTime)+0000 에 push알림 됩니다")
+                //print("\(dateSlice) \(notificationTime)+0000 에 push알림 됩니다")
                 self.todoListViewModel.setNotificationTime(todo, date:"\(dateSlice) \(notificationTime) +0000", identifier: todo.id, isNotification: isNotification)
                 self.todoListViewModel.updateTodo(todo)
                 self.todoCollectionVIew.reloadItems(at: [indexPath])
@@ -161,7 +164,8 @@ class TodoCellController: UICollectionViewCell  {
     @IBOutlet weak var bell: UIButton!
     @IBOutlet weak var checkBox: UIButton!
     @IBOutlet weak var deleteBtn: UIButton!
-   
+    weak var viewController: UIViewController?
+
    // view객체의 메소드가 다른 비지니스 로직에까지 영향을 주지 않기위해 클로저 사용
     var doneBellTapHandler : ((Bool)->Void)?
     var doneStarTapHandler : ((Bool)->Void)?
@@ -242,16 +246,26 @@ class TodoCellController: UICollectionViewCell  {
     }
     
     @IBAction func touchBell(_ sender: UIButton) {
-        bell.isSelected = !bell.isSelected
-        let isNotification = bell.isSelected
-        bell.tintColor   = bell.isSelected ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0): .lightGray
-        let notiTime =  UserDefaults.standard.string(forKey: "notificationTime")
-        if notiTime == nil{
-            print("설정 > 알림시간을 설정해 주세요")
+        let notificationPermission =  UserDefaults.standard.bool(forKey: "notificationPermission")
+        if notificationPermission{
+            bell.isSelected = !bell.isSelected
+            let isNotification = bell.isSelected
+            bell.tintColor   = bell.isSelected ? UIColor(red: 53/255, green: 110/255, blue: 253/255, alpha: 1.0): .lightGray
+            let notiTime:String? =  UserDefaults.standard.string(forKey: "notificationTime")
+            if notiTime == nil{
+                let alert = UIAlertController(title: "push 알림 시간 요청", message: "설정 > 알림 시간을 설정해 주세요", preferredStyle: UIAlertController.Style.alert)
+                let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+                alert.addAction(okAction)
+                viewController?.present(alert, animated: true, completion: nil)
+            }else {
+                doneBellTapHandler?(isNotification)
+            }
         }else {
-            doneBellTapHandler?(isNotification)
+            let alert = UIAlertController(title: "push 알림 설정 요청", message: "설정 > 앱 > 알림 설정을 수락해 주세요", preferredStyle: UIAlertController.Style.alert)
+            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+            alert.addAction(okAction)
+            viewController?.present(alert, animated: true, completion: nil)
         }
-        
     }
     
     @IBAction func didTodo(_ sender: UIButton) {

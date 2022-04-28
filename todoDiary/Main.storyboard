@@ -29,14 +29,14 @@
                                 <color key="backgroundColor" red="0.89019607840000003" green="0.94509803920000002" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" id="qYN-z5-HjC" customClass="SettingCellController" customModule="todoDiary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="41.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="41"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qYN-z5-HjC" id="QTG-gL-dtD">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCf-9f-CLu">
-                                                    <rect key="frame" x="20" y="10" width="42" height="21.5"/>
+                                                    <rect key="frame" x="20" y="10" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -59,24 +59,99 @@
                                     <outlet property="delegate" destination="IiF-YF-Me4" id="XdJ-FL-2gb"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eMS-Sh-mQx">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DT1-VA-CcX">
+                                        <rect key="frame" x="87" y="150" width="240" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="알림" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QUh-Fd-Kef">
+                                                <rect key="frame" x="106" y="10" width="28" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ts-Yd-mXP">
+                                                <rect key="frame" x="199" y="4" width="41" height="32"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="tapPopupClose:" destination="IiF-YF-Me4" eventType="touchUpInside" id="OLD-cD-KaL"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="4Ts-Yd-mXP" secondAttribute="trailing" id="EFO-oR-LeT"/>
+                                            <constraint firstItem="4Ts-Yd-mXP" firstAttribute="centerY" secondItem="DT1-VA-CcX" secondAttribute="centerY" id="TyV-C5-ZZI"/>
+                                            <constraint firstItem="QUh-Fd-Kef" firstAttribute="centerY" secondItem="DT1-VA-CcX" secondAttribute="centerY" id="gGe-Re-oC5"/>
+                                            <constraint firstItem="QUh-Fd-Kef" firstAttribute="top" secondItem="DT1-VA-CcX" secondAttribute="top" constant="10" id="kfE-R3-VID"/>
+                                            <constraint firstItem="QUh-Fd-Kef" firstAttribute="centerX" secondItem="DT1-VA-CcX" secondAttribute="centerX" id="zfX-l6-oVQ"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sP3-RE-l3J">
+                                        <rect key="frame" x="87" y="190" width="240" height="80"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjs-Of-rdc">
+                                                <rect key="frame" x="103.5" y="32" width="33" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="tjs-Of-rdc" firstAttribute="centerX" secondItem="sP3-RE-l3J" secondAttribute="centerX" id="L1R-Uz-6m2"/>
+                                            <constraint firstAttribute="height" constant="80" id="fQP-f4-iaI"/>
+                                            <constraint firstItem="tjs-Of-rdc" firstAttribute="centerY" secondItem="sP3-RE-l3J" secondAttribute="centerY" id="tfy-0e-aCw"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="sP3-RE-l3J" secondAttribute="trailing" constant="87" id="9gh-Wo-M53"/>
+                                    <constraint firstItem="DT1-VA-CcX" firstAttribute="width" secondItem="sP3-RE-l3J" secondAttribute="width" id="GM2-zJ-S4w"/>
+                                    <constraint firstItem="sP3-RE-l3J" firstAttribute="leading" secondItem="eMS-Sh-mQx" secondAttribute="leading" constant="87" id="YYZ-dC-tcM"/>
+                                    <constraint firstItem="DT1-VA-CcX" firstAttribute="leading" secondItem="sP3-RE-l3J" secondAttribute="leading" id="pIV-fh-AQc"/>
+                                    <constraint firstItem="DT1-VA-CcX" firstAttribute="top" secondItem="eMS-Sh-mQx" secondAttribute="top" constant="150" id="uM9-lN-3wO"/>
+                                    <constraint firstItem="sP3-RE-l3J" firstAttribute="top" secondItem="DT1-VA-CcX" secondAttribute="bottom" id="uVf-NK-W8s"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="c3d-Vz-2n5" appends="YES" id="sfw-LF-bBD"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="RAb-jE-5lf"/>
                         <color key="backgroundColor" red="0.8901960784313725" green="0.94509803921568625" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="RAb-jE-5lf" firstAttribute="top" secondItem="eMS-Sh-mQx" secondAttribute="top" id="5Pw-Dg-jKv"/>
+                            <constraint firstItem="eMS-Sh-mQx" firstAttribute="leading" secondItem="RAb-jE-5lf" secondAttribute="leading" id="9Uk-Gs-pGo"/>
                             <constraint firstAttribute="trailing" secondItem="SlA-tp-Qd2" secondAttribute="trailing" id="HTY-OD-ZGn"/>
                             <constraint firstItem="SlA-tp-Qd2" firstAttribute="top" secondItem="Pfq-zo-1VX" secondAttribute="bottom" id="Mze-KR-AMb"/>
                             <constraint firstItem="Pfq-zo-1VX" firstAttribute="leading" secondItem="RAb-jE-5lf" secondAttribute="leading" constant="20" id="RRO-XI-YGo"/>
                             <constraint firstItem="Pfq-zo-1VX" firstAttribute="top" secondItem="RAb-jE-5lf" secondAttribute="top" constant="20" id="at3-XB-KYO"/>
                             <constraint firstItem="SlA-tp-Qd2" firstAttribute="bottom" secondItem="RAb-jE-5lf" secondAttribute="bottom" id="bR7-Jj-fcA"/>
+                            <constraint firstItem="RAb-jE-5lf" firstAttribute="trailing" secondItem="eMS-Sh-mQx" secondAttribute="trailing" id="dIX-1b-q9z"/>
                             <constraint firstItem="SlA-tp-Qd2" firstAttribute="leading" secondItem="2Gb-Za-nVm" secondAttribute="leading" id="kHx-pD-rLo"/>
+                            <constraint firstItem="eMS-Sh-mQx" firstAttribute="bottom" secondItem="RAb-jE-5lf" secondAttribute="bottom" constant="83" id="ybL-xh-yB3"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="설정" image="gearshape.circle" catalog="system" selectedImage="gearshape.circle.fill" id="lAw-KV-dXI"/>
                     <connections>
+                        <outlet property="popup" destination="sP3-RE-l3J" id="5fq-s8-0t5"/>
+                        <outlet property="popupBox" destination="eMS-Sh-mQx" id="ybQ-mI-Ujg"/>
+                        <outlet property="popupHeader" destination="DT1-VA-CcX" id="OLO-B4-MzI"/>
+                        <outlet property="popupLabel" destination="tjs-Of-rdc" id="7x2-S5-LmV"/>
                         <outlet property="tableView" destination="SlA-tp-Qd2" id="nZF-Vn-8Gh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hqh-S2-1Pe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="c3d-Vz-2n5">
+                    <connections>
+                        <action selector="tapPopupHide:" destination="IiF-YF-Me4" id="xI2-pG-YNK"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="828.98550724637687" y="859.82142857142856"/>
         </scene>

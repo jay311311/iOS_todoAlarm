@@ -14,13 +14,7 @@ class DoneController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
-    
-
-   
-
 }
 
 extension DoneController : UICollectionViewDelegate, UICollectionViewDataSource{
@@ -30,14 +24,10 @@ extension DoneController : UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? DoneCellController else { return UICollectionViewCell() }
-        
         var todo:Todo = todoListViewModel.doneTodos[indexPath.item]
         cell.pastUI(todo:  todo)
-        
         return cell
     }
-  
-    
 }
 
 extension DoneController: UICollectionViewDelegateFlowLayout {
