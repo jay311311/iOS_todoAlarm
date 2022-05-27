@@ -40,7 +40,7 @@ extension SettingController: UITableViewDelegate, UITableViewDataSource{
         cell.handlerPopupContent = { date in
             self.popupBox.isHidden = !self.popupIsHide
             var time = date.components(separatedBy: " ")[1]
-            self.popupLabel.text = "당일 \(time) 알림이 도착합니다 "
+            self.popupLabel.text = "해당 날짜 \(time)경 알림이 도착합니다 "
         }
         cell.SettingTitle.text = settingItems[indexPath.row]
         if settingItems[indexPath.row] == settingItems[1] {
