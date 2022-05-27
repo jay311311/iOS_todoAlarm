@@ -18,25 +18,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Done" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfq-zo-1VX">
-                                <rect key="frame" x="20" y="64" width="71.5" height="33.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="설정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfq-zo-1VX">
+                                <rect key="frame" x="20" y="64" width="48.5" height="33.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
                                 <color key="textColor" red="0.039215686270000001" green="0.1058823529" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="SlA-tp-Qd2">
-                                <rect key="frame" x="0.0" y="97.5" width="414" height="715.5"/>
+                                <rect key="frame" x="0.0" y="112.5" width="414" height="700.5"/>
                                 <color key="backgroundColor" red="0.89019607840000003" green="0.94509803920000002" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" id="qYN-z5-HjC" customClass="SettingCellController" customModule="todoDiary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="41"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="41.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qYN-z5-HjC" id="QTG-gL-dtD">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCf-9f-CLu">
-                                                    <rect key="frame" x="20" y="10" width="42" height="21"/>
+                                                    <rect key="frame" x="20" y="10" width="42" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -128,7 +128,7 @@
                             <constraint firstItem="RAb-jE-5lf" firstAttribute="top" secondItem="eMS-Sh-mQx" secondAttribute="top" id="5Pw-Dg-jKv"/>
                             <constraint firstItem="eMS-Sh-mQx" firstAttribute="leading" secondItem="RAb-jE-5lf" secondAttribute="leading" id="9Uk-Gs-pGo"/>
                             <constraint firstAttribute="trailing" secondItem="SlA-tp-Qd2" secondAttribute="trailing" id="HTY-OD-ZGn"/>
-                            <constraint firstItem="SlA-tp-Qd2" firstAttribute="top" secondItem="Pfq-zo-1VX" secondAttribute="bottom" id="Mze-KR-AMb"/>
+                            <constraint firstItem="SlA-tp-Qd2" firstAttribute="top" secondItem="Pfq-zo-1VX" secondAttribute="bottom" constant="15" id="Mze-KR-AMb"/>
                             <constraint firstItem="Pfq-zo-1VX" firstAttribute="leading" secondItem="RAb-jE-5lf" secondAttribute="leading" constant="20" id="RRO-XI-YGo"/>
                             <constraint firstItem="Pfq-zo-1VX" firstAttribute="top" secondItem="RAb-jE-5lf" secondAttribute="top" constant="20" id="at3-XB-KYO"/>
                             <constraint firstItem="SlA-tp-Qd2" firstAttribute="bottom" secondItem="RAb-jE-5lf" secondAttribute="bottom" id="bR7-Jj-fcA"/>
@@ -170,7 +170,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.94999999999999996" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" prefetchingEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6g-Ii-WFL" userLabel="Todo Collection VIew">
-                                <rect key="frame" x="0.0" y="97.5" width="414" height="655.5"/>
+                                <rect key="frame" x="0.0" y="112.5" width="414" height="640.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="12" id="VKD-MI-ont">
@@ -400,7 +400,7 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="aMk-oF-cme" secondAttribute="trailing" id="T0m-ty-Nge"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="aMk-oF-cme" secondAttribute="bottom" id="aO5-iM-QF6"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="wQh-ER-l8X" secondAttribute="trailing" id="eKN-Gp-6Yr"/>
-                            <constraint firstItem="t6g-Ii-WFL" firstAttribute="top" secondItem="Wd1-HR-7lg" secondAttribute="bottom" id="gAP-b0-KnS"/>
+                            <constraint firstItem="t6g-Ii-WFL" firstAttribute="top" secondItem="Wd1-HR-7lg" secondAttribute="bottom" constant="15" id="gAP-b0-KnS"/>
                             <constraint firstItem="wQh-ER-l8X" firstAttribute="top" secondItem="t6g-Ii-WFL" secondAttribute="bottom" id="ga6-79-wAu"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="wQh-ER-l8X" secondAttribute="bottom" id="otG-jl-dW0"/>
                             <constraint firstItem="Wd1-HR-7lg" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="qLZ-qz-pu8"/>
@@ -446,7 +446,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.94999998807907104" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" prefetchingEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFU-3N-dOY" userLabel="Todo Collection VIew">
-                                <rect key="frame" x="0.0" y="97.5" width="414" height="715.5"/>
+                                <rect key="frame" x="0.0" y="112.5" width="414" height="700.5"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="12" id="V0b-Md-OML">
@@ -565,7 +565,7 @@
                         <viewLayoutGuide key="safeArea" id="ocG-4s-7bQ"/>
                         <color key="backgroundColor" red="0.8901960784313725" green="0.94509803921568625" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="kFU-3N-dOY" firstAttribute="top" secondItem="JE0-vh-gK7" secondAttribute="bottom" id="2ht-ta-HwG"/>
+                            <constraint firstItem="kFU-3N-dOY" firstAttribute="top" secondItem="JE0-vh-gK7" secondAttribute="bottom" constant="15" id="2ht-ta-HwG"/>
                             <constraint firstItem="JE0-vh-gK7" firstAttribute="top" secondItem="ocG-4s-7bQ" secondAttribute="top" constant="20" id="6iy-Cq-UdT"/>
                             <constraint firstItem="ocG-4s-7bQ" firstAttribute="bottom" secondItem="kFU-3N-dOY" secondAttribute="bottom" id="6mw-3u-wWC"/>
                             <constraint firstItem="kFU-3N-dOY" firstAttribute="leading" secondItem="ocG-4s-7bQ" secondAttribute="leading" id="BlJ-3k-McZ"/>
